@@ -1,4 +1,0 @@
-quantify
-========
-
-new beginnings
