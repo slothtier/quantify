@@ -3,15 +3,15 @@
 /* Controllers */
 
 angular.module('quantifyApp.controllers', [])
-    .controller('QuantifyCtrl', ['$scope', function($scope) {
+     .controller('QuantifyCtrl', ['$scope', function($scope) {
 
     }])
 
     .controller('AuthCtrl', ['$scope', function($scope) {
         $scope.authenticate = function() {
-            window.location.href = "https://accounts.spotify.com/authorize?client_id=2877dc4791af41e0b53de799f8cf2472&redirect_uri=http%3A%2F%2Fslothtier.github.io%2Findex.html&scope=playlist-read-private&response_type=token&state=123";
-            console.log("clicked the auth button")
-        }
+            window.location.href = 'https://accounts.spotify.com/authorize?client_id=2877dc4791af41e0b53de799f8cf2472&redirect_uri=http%3A%2F%2Fslothtier.github.io%2Findex.html&scope=playlist-read-private&response_type=token&state=123';
+            console.log('clicked the auth button');
+        };
 
     }])
 
@@ -27,16 +27,16 @@ angular.module('quantifyApp.controllers', [])
                     $scope.tokenData = token;
                 }).error(function() {
                     /* alert("token not retrieved") */
-                })
+                });
 
-            if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) == -1) {
-                alert("please enter a valid spotify playlist url or uri");
+            if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) === -1) {
+                window.alert('please enter a valid spotify playlist url or uri');
             } else {
 
                 var userID = $scope.model.url.match(/([A-Za-z0-9_]{8,40})/ig)[0];
                 var playUrl = $scope.model.url.substr($scope.model.url.search(/[\w]{22}/ig),22);
-                var apiUrl = "https://api.spotify.com/v1/users/"+userID+"/playlists/"+playUrl+"/tracks";
-                var authString = "Bearer "+ accessToken;
+                var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playUrl+'/tracks';
+                var authString = 'Bearer '+ accessToken;
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
                         $scope.playlistName = data.name;
@@ -61,13 +61,13 @@ angular.module('quantifyApp.controllers', [])
 
                         for(var i=0;i<Object.keys($scope.tracks2).length;i++) {
                             $scope.range.push($scope.tracks2[i].track);
-                        };
+                        }
                         var totalduration = 0;
 
-                        for(var i=0;i<Object.keys($scope.tracks2).length;i++) {
-                            totalduration = totalduration + $scope.range[i].duration_ms
+                        for(var j=0;j<Object.keys($scope.tracks2).length;j++) {
+                            totalduration = totalduration + $scope.range[j].duration_ms;
                             console.log(totalduration);
-                        };
+                        }
                         $scope.total = totalduration;
                         $scope.durationinmin = totalduration/1000/60;
                         $scope.totalduration = Math.ceil($scope.durationinmin);
@@ -98,19 +98,19 @@ angular.module('quantifyApp.controllers', [])
                         console.log($scope.sizeExtremeQuality);
                         $scope.showPlaylist = true;
                     }).error(function() {
-                        alert("playlist data could not be loaded")
+                        window.alert('playlist data could not be loaded');
                     });
-            };
+            }
 
 
 
 
 
-        }
+        };
     })
 
 
     .controller('UrlCtrl', ['$scope', function($scope) {
         $scope.url = $scope.model.url;
 
-    }])
+    }]);
