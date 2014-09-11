@@ -11,30 +11,52 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/style.css">
     <!-- endbuild -->
+    <base href="/">
   </head>
   <body ng-app="quantifyApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">quantify</h3>
-      </div>
 
-      <div ng-view=""></div>
+    <div id="banner">
+        <section class="container">
+            <h1><a href="/" id="logo">quantify</a></h1>
+            <span>size your spotify offline playlists</span>
+        </section>
+    </div>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
+
+    <!-- Section Two -->
+    <div class="wrapper style3">
+        <section class="container">
+
+            <div ng-view></div>
+
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer">
+        <section class="container">
+            <header class="major">
+                <span class="byline">show some love</span>
+            </header>
+            <ul class="icons">
+                <li class="active"><a href="/" class="fa fa-facebook"><span>Facebook</span></a></li>
+                <li><a href="/" class="fa fa-twitter"><span>Twitter</span></a></li>
+                <li><a href="https://github.com/slothtier/quantify" class="fa fa-github" target="_blank"><span>Github</span></a></li>
+                <li><a href="/" class="fa fa-google-plus"><span>Google+</span></a></li>
+            </ul>
+            <hr />
+        </section>
+
+        <!-- Copyright -->
+        <div id="copyright">
+            Design: <a href="http://templated.co">TEMPLATED</a>
+        </div>
     </div>
 
 
@@ -85,7 +107,6 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
         <!-- endbuild -->
 </body>
 </html>

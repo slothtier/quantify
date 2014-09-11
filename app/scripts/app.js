@@ -15,19 +15,35 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ngRoute',
+    'quantifyApp.controllers'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+  .run(function($rootScope, $location) {
+     //console.log($location.$$hash);
+        if($location.$$hash.search(/([A-Za-z0-9_-]{155})/ig) > -1){
+            $rootScope.location = $location.$$hash;
+            $location.path("/quantify");
+            $location.url($location.path());
+            //console.log($rootScope.location);
+            //console.log($location.$$hash);
+            //console.log("authenticated!");
+        };
+
+  })
+  .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/quantify', {
+            templateUrl: '/views/quantify.html',
+            controller: 'QuantifyCtrl'
+            })
+            .when('/auth', {
+                templateUrl: '/views/auth.html',
+                controller: 'AuthCtrl'
+            })
+            .otherwise({
+                redirectTo: '/auth'
+            });
+
+        $locationProvider.html5Mode(true);
+  }]);
