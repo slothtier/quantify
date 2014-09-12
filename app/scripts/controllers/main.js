@@ -9,7 +9,7 @@ angular.module('quantifyApp.controllers', [])
 
     .controller('AuthCtrl', ['$scope', function($scope) {
         $scope.authenticate = function() {
-            window.location.href = 'https://accounts.spotify.com/authorize?client_id=2877dc4791af41e0b53de799f8cf2472&redirect_uri=http%3A%2F%2Fslothtier.github.io%2Findex.html&scope=playlist-read-private&response_type=token&state=123';
+            window.location.href = 'https://accounts.spotify.com/authorize?client_id=2877dc4791af41e0b53de799f8cf2472&redirect_uri=http%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html&scope=playlist-read-private&response_type=token&state=123';
             console.log('clicked the auth button');
         };
 

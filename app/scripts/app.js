@@ -34,11 +34,11 @@ angular
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/main', {
-            templateUrl: '/views/main.html',
+            templateUrl: 'views/main.html',
             controller: 'QuantifyCtrl'
             })
             .when('/auth', {
-                templateUrl: '/views/auth.html',
+                templateUrl: 'views/auth.html',
                 controller: 'AuthCtrl'
             })
             .otherwise({
