@@ -30,9 +30,11 @@ angular.module('quantifyApp.controllers', [])
                 });
 
             if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) === -1) {
-                window.alert('please enter a valid spotify playlist url or uri');
+                $scope.urlError = 'please enter a valid spotify playlist url or uri';
+                //window.alert('please enter a valid spotify playlist url or uri');
             } else {
-
+                $scope.urlError = '';
+                $scope.apiError = '';
                 var userID = $scope.model.url.match(/([A-Za-z0-9_]{8,40})/ig)[0];
                 var playUrl = $scope.model.url.substr($scope.model.url.search(/[\w]{22}/ig),22);
                 var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playUrl+'/tracks';
@@ -98,7 +100,8 @@ angular.module('quantifyApp.controllers', [])
                         console.log($scope.sizeExtremeQuality);
                         $scope.showPlaylist = true;
                     }).error(function() {
-                        window.alert('playlist data could not be loaded');
+                        $scope.apiError = 'uh oh.. playlist data could not be loaded..';
+                        //window.alert('playlist data could not be loaded');
                     });
             }
 

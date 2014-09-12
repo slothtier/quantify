@@ -1,8 +1,10 @@
 <div ng-controller="DataCtrl">
-    <span>
+    <div>
         <input type="text" class="input" ng-model="model.url" placeholder="enter a valid spotify playlist url or uri"/>
-    </span>
-
+        <div class="wrapper style1">{{urlError}}</div>
+        <div class="wrapper style1">{{apiError}}</div>
+    </div>
+    <p></p>
     <button ng-click="getPlaylistData()" class="button alt" type="button">Quantify!</button>
     <div ng-show="showPlaylist">
         <p>Playlist Data:</p>
