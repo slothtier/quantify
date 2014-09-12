@@ -1,0 +1,908 @@
+@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
+/*
+	Solarize by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+*/
+/* Basic */
+/* line 12, ../../app/styles/main.scss */
+html, body {
+  background: #222222;
+  height: 100%;
+  min-width: 600px;
+}
+
+/* line 18, ../../app/styles/main.scss */
+body.loading * {
+  transition: none !important;
+  -webkit-animation: none !important;
+  -ms-animation: none !important;
+  animation: none !important;
+}
+
+/* line 31, ../../app/styles/main.scss */
+body, input, select, textarea {
+  color: #555555;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12pt;
+  font-weight: 300;
+  line-height: 1.65em;
+  text-align: center;
+}
+
+/* line 41, ../../app/styles/main.scss */
+input:focus::-webkit-input-placeholder {
+  opacity: 0;
+}
+
+/* line 45, ../../app/styles/main.scss */
+a {
+  color: #82b440;
+  text-decoration: underline;
+}
+
+/* line 50, ../../app/styles/main.scss */
+strong, b {
+  font-weight: 700;
+}
+
+/* line 54, ../../app/styles/main.scss */
+em, i {
+  font-style: italic;
+}
+
+/* line 58, ../../app/styles/main.scss */
+p, ul, ol, dl, table, blockquote {
+  margin: 0 0 2em 0;
+}
+
+/* line 62, ../../app/styles/main.scss */
+p {
+  line-height: 1.8em;
+}
+
+/* line 66, ../../app/styles/main.scss */
+p.medium {
+  font-size: 1.4em;
+}
+
+/* line 70, ../../app/styles/main.scss */
+h1, h2, h3, h4, h5, h6 {
+  color: inherit;
+  font-weight: 700;
+}
+
+/* line 75, ../../app/styles/main.scss */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* line 80, ../../app/styles/main.scss */
+h2 {
+  font-size: 1.5em;
+}
+
+/* line 84, ../../app/styles/main.scss */
+h3 {
+  font-size: 1.25em;
+}
+
+/* line 88, ../../app/styles/main.scss */
+sub {
+  font-size: 0.8em;
+  position: relative;
+  top: 0.5em;
+}
+
+/* line 94, ../../app/styles/main.scss */
+sup {
+  font-size: 0.8em;
+  position: relative;
+  top: -0.5em;
+}
+
+/* line 100, ../../app/styles/main.scss */
+hr {
+  border-top: solid 1px #82b440;
+  border: 0;
+  margin-bottom: 1.5em;
+}
+
+/* line 106, ../../app/styles/main.scss */
+blockquote {
+  border-left: solid 0.5em #82b440;
+  font-style: italic;
+  padding: 1em 0 1em 2em;
+}
+
+/* line 112, ../../app/styles/main.scss */
+section.special, article.special {
+  text-align: center;
+}
+
+/* line 116, ../../app/styles/main.scss */
+header.major {
+  padding-bottom: 3em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* line 122, ../../app/styles/main.scss */
+header.major h2 {
+  font-size: 2.6em;
+  font-weight: 700;
+}
+
+/* line 127, ../../app/styles/main.scss */
+header.major .byline {
+  display: block;
+  padding-top: 1em;
+  letter-spacing: 1px;
+  font-size: 1.4em;
+}
+
+/* line 134, ../../app/styles/main.scss */
+footer > :last-child {
+  margin-bottom: 0;
+}
+
+/* line 138, ../../app/styles/main.scss */
+footer.major {
+  padding-top: 3em;
+}
+
+/* Form */
+/* line 144, ../../app/styles/main.scss */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background: none;
+  border: solid 1px #82b440;
+  color: inherit;
+  display: block;
+  outline: 0;
+  padding: 0.75em;
+  text-decoration: none;
+  width: 400px;
+  background-color: #222222;
+  border-radius: 20px;
+}
+
+/* line 165, ../../app/styles/main.scss */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #82b440;
+}
+
+/* line 172, ../../app/styles/main.scss */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  line-height: 1em;
+}
+
+/* line 178, ../../app/styles/main.scss */
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.5;
+  position: relative;
+  top: 3px;
+}
+
+/* line 185, ../../app/styles/main.scss */
+:-moz-placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+
+/* line 190, ../../app/styles/main.scss */
+::-moz-placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+
+/* line 195, ../../app/styles/main.scss */
+:-ms-input-placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+
+/* line 200, ../../app/styles/main.scss */
+.formerize-placeholder {
+  color: rgba(85, 85, 85, 0.5) !important;
+}
+
+/* Image */
+/* line 206, ../../app/styles/main.scss */
+.image {
+  border: 0;
+  position: relative;
+}
+
+/* line 211, ../../app/styles/main.scss */
+.image.fit {
+  display: block;
+}
+
+/* line 215, ../../app/styles/main.scss */
+.image.fit img {
+  display: block;
+  width: 100%;
+}
+
+/* line 220, ../../app/styles/main.scss */
+.image.feature {
+  display: block;
+  margin: 0 0 2em 0;
+}
+
+/* line 225, ../../app/styles/main.scss */
+.image.feature img {
+  display: block;
+  width: 100%;
+}
+
+/* Icon */
+/* line 232, ../../app/styles/main.scss */
+.icon {
+  position: relative;
+}
+
+/* line 236, ../../app/styles/main.scss */
+.icon:before {
+  content: "";
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none !important;
+}
+
+/* line 246, ../../app/styles/main.scss */
+.icon > .label {
+  display: none;
+}
+
+/* Lists */
+/* line 252, ../../app/styles/main.scss */
+ol.default {
+  list-style: decimal;
+  padding-left: 1.25em;
+}
+
+/* line 257, ../../app/styles/main.scss */
+ol.default li {
+  padding-left: 0.25em;
+}
+
+/* line 261, ../../app/styles/main.scss */
+ul.default {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* line 267, ../../app/styles/main.scss */
+ul.default li {
+  padding: 0.40em 0em;
+}
+
+/* line 271, ../../app/styles/main.scss */
+ul.icons {
+  cursor: default;
+  padding-bottom: 2em;
+}
+
+/* line 276, ../../app/styles/main.scss */
+ul.icons li {
+  display: inline-block;
+  line-height: 1em;
+  padding: 0.5em 1em;
+}
+
+/* line 282, ../../app/styles/main.scss */
+ul.icons li:first-child {
+  padding-left: 0;
+}
+
+/* line 286, ../../app/styles/main.scss */
+ul.icons li span {
+  display: none;
+}
+
+/* line 290, ../../app/styles/main.scss */
+ul.icons li a {
+  text-decoration: none;
+  font-size: 2em;
+  color: inherit;
+  opacity: 0.2;
+  transition: all 0.35s ease-in-out;
+}
+
+/* line 302, ../../app/styles/main.scss */
+ul.icons li a:hover {
+  color: inherit;
+  opacity: 1;
+}
+
+/* line 307, ../../app/styles/main.scss */
+ul.actions {
+  cursor: default;
+}
+
+/* line 311, ../../app/styles/main.scss */
+ul.actions:last-child {
+  margin-bottom: 0;
+}
+
+/* line 315, ../../app/styles/main.scss */
+ul.actions li {
+  display: inline-block;
+  padding: 0 0 0 1.5em;
+}
+
+/* line 320, ../../app/styles/main.scss */
+ul.actions li:first-child {
+  padding: 0;
+}
+
+/* line 324, ../../app/styles/main.scss */
+ul.actions.vertical li {
+  display: block;
+  padding: 1.5em 0 0 0;
+}
+
+/* line 329, ../../app/styles/main.scss */
+ul.actions.vertical li:first-child {
+  padding: 0;
+}
+
+/* line 333, ../../app/styles/main.scss */
+ul.special-icons {
+  margin: 0em;
+  padding: 0em;
+}
+
+/* line 338, ../../app/styles/main.scss */
+ul.special-icons > li {
+  position: relative;
+  padding: 0.50em 0em 0.50em 0em;
+}
+
+/* line 343, ../../app/styles/main.scss */
+ul.special-icons > li:before {
+  position: absolute;
+  left: 0;
+  top: 2em;
+  display: block;
+  background: none;
+  font-size: 2em;
+  border-radius: 5px;
+}
+
+/* line 353, ../../app/styles/main.scss */
+ul.special-icons > li:first-child {
+  border-top: none;
+}
+
+/* line 357, ../../app/styles/main.scss */
+ul.special-icons h3 {
+  margin-bottom: 0.80em;
+  line-height: 2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* line 365, ../../app/styles/main.scss */
+ul.special-icons span {
+  line-height: 190%;
+}
+
+/* line 369, ../../app/styles/main.scss */
+ul.special-icons .fa {
+  float: left;
+  display: inline-block;
+  padding-right: 1em;
+  font-size: 1.4em;
+  color: #82b440;
+}
+
+/* line 377, ../../app/styles/main.scss */
+ul.special-icons p {
+  padding-left: 2.7em;
+}
+
+/* Tables */
+/* line 383, ../../app/styles/main.scss */
+table {
+  width: 100%;
+}
+
+/* line 387, ../../app/styles/main.scss */
+table.default {
+  width: 100%;
+}
+
+/* line 391, ../../app/styles/main.scss */
+table.default tbody tr {
+  border-bottom: solid 1px #82b440;
+}
+
+/* line 395, ../../app/styles/main.scss */
+table.default td {
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+/* line 399, ../../app/styles/main.scss */
+table.default th {
+  font-weight: 700;
+  padding: 0.5em 1em 0.5em 1em;
+  text-align: left;
+}
+
+/* line 405, ../../app/styles/main.scss */
+table.default thead {
+  background: #555555;
+  color: #fff;
+}
+
+/* Button */
+/* line 412, ../../app/styles/main.scss */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+.button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background: none;
+  border-radius: none;
+  border: 2px solid;
+  border-color: #82b440;
+  color: #82b440;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.90em 1.2em;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.4em;
+  transition: all 0.35s ease-in-out;
+}
+
+/* line 441, ../../app/styles/main.scss */
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:hover {
+  background: #82b440;
+  color: white;
+}
+
+/* line 449, ../../app/styles/main.scss */
+input[type="submit"].alt,
+input[type="reset"].alt,
+input[type="button"].alt,
+.button.alt {
+  border-color: inherit;
+  color: inherit;
+}
+
+/* line 457, ../../app/styles/main.scss */
+input[type="submit"].alt:hover,
+input[type="reset"].alt:hover,
+input[type="button"].alt:hover,
+.button.alt:hover {
+  background: white;
+  color: #82b440;
+}
+
+/* line 465, ../../app/styles/main.scss */
+input[type="submit"].fit,
+input[type="reset"].fit,
+input[type="button"].fit,
+.button.fit {
+  width: 100%;
+}
+
+/* line 472, ../../app/styles/main.scss */
+input[type="submit"].small,
+input[type="reset"].small,
+input[type="button"].small,
+.button.small {
+  font-size: 0.8em;
+}
+
+/* Wrapper */
+/* line 481, ../../app/styles/main.scss */
+.wrapper {
+  padding: 6em 0em 4em 0em;
+}
+
+/* line 485, ../../app/styles/main.scss */
+.wrapper.style1 {
+  padding: 0em;
+  background: #222222;
+  background-size: cover;
+}
+
+/* line 491, ../../app/styles/main.scss */
+.wrapper.style2 {
+  background: #f2f2f2;
+}
+
+/* line 495, ../../app/styles/main.scss */
+.wrapper.style2 .major {
+  text-align: left !important;
+}
+
+/* line 499, ../../app/styles/main.scss */
+.wrapper.style2 .major h2 {
+  display: block;
+  margin-bottom: 0.70em;
+  letter-spacing: 1px;
+  line-height: 1.4em;
+  text-transform: uppercase;
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+/* line 509, ../../app/styles/main.scss */
+.wrapper.style2 .major .byline {
+  letter-spacing: normal;
+  line-height: 1.6em;
+  text-transform: capitalize;
+  font-size: 1.4em;
+}
+
+/* line 516, ../../app/styles/main.scss */
+.wrapper.style2 h3 {
+  display: block;
+  margin-bottom: 1em;
+  letter-spacing: 1px;
+  line-height: 1.4em;
+  text-transform: uppercase;
+  font-size: 1.6em;
+  font-weight: 400;
+}
+
+/* line 526, ../../app/styles/main.scss */
+.wrapper.style3 {
+  padding-bottom: 6em;
+  background: #82b440;
+  text-align: center;
+  color: white;
+}
+
+/* line 533, ../../app/styles/main.scss */
+.wrapper.style3 .container {
+  padding-left: 6em;
+  padding-right: 6em;
+}
+
+/* line 538, ../../app/styles/main.scss */
+.wrapper.style3 p {
+  font-size: 1.6em;
+}
+
+/* line 542, ../../app/styles/main.scss */
+.wrapper.style4 {
+  background: white;
+}
+
+/* line 546, ../../app/styles/main.scss */
+.wrapper.style5 {
+  background: #82b440;
+  text-align: center;
+  color: white;
+}
+
+/* line 552, ../../app/styles/main.scss */
+.wrapper.style5 .image {
+  display: block;
+  width: 60%;
+  margin: 0em auto 2em auto;
+}
+
+/* line 558, ../../app/styles/main.scss */
+.wrapper.style5 .image img {
+  border-radius: 50%;
+  border: 10px solid;
+  border-color: white;
+}
+
+/* Header */
+/* line 566, ../../app/styles/main.scss */
+#header {
+  color: white;
+  height: 4em;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* line 572, ../../app/styles/main.scss */
+#header .container {
+  position: relative;
+}
+
+/* line 576, ../../app/styles/main.scss */
+.homepage #logo {
+  display: none;
+}
+
+/* line 580, ../../app/styles/main.scss */
+.homepage #nav {
+  position: static;
+  right: none;
+  text-align: center;
+}
+
+/* line 586, ../../app/styles/main.scss */
+#logo {
+  line-height: 2em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 2em;
+  font-weight: 400;
+}
+
+/* line 594, ../../app/styles/main.scss */
+#logo h1 {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 600, ../../app/styles/main.scss */
+#logo a {
+  color: inherit;
+}
+
+/* line 604, ../../app/styles/main.scss */
+#nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* line 610, ../../app/styles/main.scss */
+#nav > ul {
+  margin: 0;
+}
+
+/* line 614, ../../app/styles/main.scss */
+#nav > ul > li {
+  border-radius: 4px;
+  display: inline-block;
+  margin-left: 0.5em;
+  padding: 0 0.5em;
+}
+
+/* line 621, ../../app/styles/main.scss */
+#nav > ul > li a {
+  color: inherit;
+  line-height: 4em;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+/* line 631, ../../app/styles/main.scss */
+#nav > ul > li:first-child {
+  margin-left: 0;
+}
+
+/* line 635, ../../app/styles/main.scss */
+#nav > ul > li.active a {
+  color: white;
+}
+
+/* line 639, ../../app/styles/main.scss */
+#nav > ul > li > ul {
+  display: none;
+}
+
+/* Dropotron */
+/* line 645, ../../app/styles/main.scss */
+.dropotron {
+  top: 2em;
+  background: rgba(32, 32, 32, 0.75);
+  border-radius: 4px;
+  color: inherit;
+  min-width: 12em;
+  padding: 1em 0;
+  color: white;
+}
+
+/* line 655, ../../app/styles/main.scss */
+.dropotron > li {
+  line-height: 2em;
+  padding: 0 1em;
+}
+
+/* line 660, ../../app/styles/main.scss */
+.dropotron > li > a {
+  color: inherit;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* line 667, ../../app/styles/main.scss */
+.dropotron > li.active > a, .dropotron > li:hover > a {
+  color: inherit;
+}
+
+/* line 671, ../../app/styles/main.scss */
+.dropotron.level-0 {
+  border-radius: 0 0 4px 4px;
+  font-size: 1em;
+  margin-left: -0.5em;
+}
+
+/* Banner */
+/* line 679, ../../app/styles/main.scss */
+#banner {
+  padding: 6em 0em 3em 0em;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  height: 20vh;
+  min-height: 300px;
+}
+
+/* line 688, ../../app/styles/main.scss */
+#banner .container {
+  padding: 0em 8em;
+}
+
+/* line 693, ../../app/styles/main.scss */
+#banner h2 {
+  display: inline-block;
+  padding: 0.50em 0.30em;
+  background: #82b440;
+  font-size: 3em;
+  font-weight: 400;
+}
+
+/* line 701, ../../app/styles/main.scss */
+#banner span, #banner p {
+  display: block;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 1.6em;
+  font-weight: 300;
+}
+
+/* line 709, ../../app/styles/main.scss */
+#banner span {
+  padding: 1em 0em;
+}
+
+/* Main */
+/* line 715, ../../app/styles/main.scss */
+#main {
+  padding: 4em 0;
+}
+
+/* line 719, ../../app/styles/main.scss */
+#main #content .major, #main #sidebar .major {
+  text-align: left;
+}
+
+/* line 723, ../../app/styles/main.scss */
+#main #sidebar section {
+  margin-top: 4em;
+}
+
+/* line 727, ../../app/styles/main.scss */
+#main #sidebar section:first-child {
+  margin-top: 0;
+}
+
+/* line 731, ../../app/styles/main.scss */
+#main #sidebar .major {
+  padding-bottom: 2em;
+}
+
+/* line 735, ../../app/styles/main.scss */
+#main #sidebar .major h2 {
+  font-size: 1.8em;
+}
+
+/* Footer */
+/* line 741, ../../app/styles/main.scss */
+#footer {
+  padding: 6em 0 2em 0;
+  text-align: center;
+  color: white;
+}
+
+/* line 747, ../../app/styles/main.scss */
+#footer hr {
+  border-bottom: 1px solid;
+  border-color: inherit;
+  opacity: .05;
+}
+
+/* line 753, ../../app/styles/main.scss */
+#footer .major h2 {
+  color: inherit;
+}
+
+/* line 757, ../../app/styles/main.scss */
+#footer .major .byline {
+  color: inherit;
+  opacity: .4;
+}
+
+/* line 762, ../../app/styles/main.scss */
+#footer .copyright {
+  margin-top: 3em;
+  text-align: center;
+}
+
+/* Copyright */
+/* line 769, ../../app/styles/main.scss */
+#copyright {
+  position: relative;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 3em 0em 3em 0em;
+  color: inherit;
+  opacity: .40;
+}
+
+/* line 778, ../../app/styles/main.scss */
+#copyright a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Extra */
+/* line 785, ../../app/styles/main.scss */
+#extra1 h2 {
+  display: block;
+  margin-bottom: 1em;
+  letter-spacing: 1px;
+  line-height: 1.4em;
+  text-transform: uppercase;
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+/* line 795, ../../app/styles/main.scss */
+#extra1 h3 {
+  display: block;
+  margin-bottom: 1em;
+  letter-spacing: 1px;
+  line-height: 1.4em;
+  text-transform: uppercase;
+  font-size: 1.6em;
+  font-weight: 400;
+}
+
+/* Team */
+/* line 807, ../../app/styles/main.scss */
+#team h3 {
+  margin-bottom: 0.50em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
