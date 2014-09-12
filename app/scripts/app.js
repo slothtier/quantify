@@ -23,7 +23,7 @@ angular
      //console.log($location.$$hash);
         if($location.$$hash.search(/([A-Za-z0-9_-]{155})/ig) > -1){
             $rootScope.location = $location.$$hash;
-            $location.path('/quantify');
+            $location.path('/main');
             $location.url($location.path());
             //console.log($rootScope.location);
             //console.log($location.$$hash);
@@ -33,8 +33,8 @@ angular
   })
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider
-            .when('/quantify', {
-            templateUrl: '/views/quantify.html',
+            .when('/main', {
+            templateUrl: '/views/main.html',
             controller: 'QuantifyCtrl'
             })
             .when('/auth', {
