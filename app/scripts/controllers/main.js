@@ -9,8 +9,14 @@ angular.module('quantifyApp.controllers', [])
 
     .controller('AuthCtrl', ['$scope', function($scope) {
         $scope.authenticate = function() {
-            window.location.href = 'https://accounts.spotify.com/authorize?client_id=2877dc4791af41e0b53de799f8cf2472&redirect_uri=http%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html&scope=playlist-read-private&response_type=token&state=123';
-            console.log('clicked the auth button');
+            //build authentication url => https://developer.spotify.com/web-api/authorization-guide/
+            var accountUrl = 'https://accounts.spotify.com/authorize';
+            var clientID ='client_id=2877dc4791af41e0b53de799f8cf2472';
+            var redirectUri = 'redirect_uri=http%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html';
+            var authScope = 'scope=playlist-read-private';
+            var responseType = 'response_type=token';
+            var state = 'state=123';
+            window.location.href = accountUrl+'?'+clientID+'&'+redirectUri+'&'+authScope+'&'+responseType+'&'+state;
         };
 
     }])
@@ -30,71 +36,70 @@ angular.module('quantifyApp.controllers', [])
                 //prepare request parameters
                 var userID = $scope.model.url.match(/([A-Za-z0-9_]{8,40})/ig)[0];
                 var playlistID = $scope.model.url.substr($scope.model.url.search(/[\w]{22}/ig),22);
-                var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playlistID+'/tracks';
-                //var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playlistID;
+                var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playlistID;
                 var authString = 'Bearer '+ accessToken;
 
                 //get request for playlist data
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
-                        $scope.playlistName = data.name;
-                        $scope.playlistTrackcount = data.total;
 
-                        $scope.playlistItems = data.items;
+                        //decompose api response
+                        var completeResponse = data;
+                        var trackResponse = completeResponse.tracks;
+
+                        //extract playlist name, track count & track items
+                        $scope.playlistName = completeResponse.name;
+                        $scope.playlistTrackcount = trackResponse.total;
+                        $scope.playlistItems = trackResponse.items;
 
                         $scope.tracks = [];
-                        $scope.tracks2 = [];
-                        $scope.range = [];
-                        angular.forEach(data.items, function(item) {
-                            $scope.tracks2.push(item);
+                        $scope.tracklist = [];
 
-                            angular.forEach($scope.tracks2.track, function(bla){
-                                $scope.tracks.push(bla);
-
-                            });
-
-
-
+                        //push all items into tracks
+                        angular.forEach(trackResponse.items, function(item) {
+                            $scope.tracks.push(item);
                         });
-
-                        for(var i=0;i<Object.keys($scope.tracks2).length;i++) {
-                            $scope.range.push($scope.tracks2[i].track);
+                        //push all tracks into tracklist
+                        for(var i=0;i<Object.keys($scope.tracks).length;i++) {
+                            $scope.tracklist.push($scope.tracks[i].track);
                         }
-                        var totalduration = 0;
 
-                        for(var j=0;j<Object.keys($scope.tracks2).length;j++) {
-                            totalduration = totalduration + $scope.range[j].duration_ms;
-                            console.log(totalduration);
-                        }
-                        $scope.total = totalduration;
-                        $scope.durationinmin = totalduration/1000/60;
-                        $scope.totalduration = Math.ceil($scope.durationinmin);
-                        console.log($scope.tracks2);
-                        console.log($scope.range);
-                        console.log($scope.total);
-                        console.log($scope.tracks2[0]);
-                        console.log($scope.model.url);
-                        console.log(Object.keys($scope.tracks2).length);
-                        console.log(Object.keys($scope.tracks2).keys);
-                        $scope.testtest = $scope.tracks2;
-                        $scope.log = [];
-                        angular.forEach($scope.testtest, function(value, key) {
-                            $scope.log.push(key + ': ' + value);
-                            console.log($scope.log);
-                        });
-                        var sizeNormalQuality = 0;
-                        var sizeHighQuality = 0;
-                        var sizeExtremeQuality = 0;
-                        sizeNormalQuality = Math.ceil($scope.durationinmin*60*12/1000);
-                        $scope.sizeNormalQuality = sizeNormalQuality;
-                        sizeHighQuality = Math.ceil($scope.durationinmin*60*20/1000);
-                        $scope.sizeHighQuality = sizeHighQuality;
-                        sizeExtremeQuality = Math.ceil($scope.durationinmin*60*40/1000);
-                        $scope.sizeExtremeQuality = sizeExtremeQuality;
-                        console.log($scope.sizeNormalQuality);
-                        console.log($scope.sizeHighQuality);
-                        console.log($scope.sizeExtremeQuality);
+                        //calculate total playlist duration in ms
+                        var durationMs = 0;
+                        for(var j=0;j<Object.keys($scope.tracks).length;j++) {
+                            durationMs = durationMs + $scope.tracklist[j].duration_ms;
+                        };
+
+                        function msToTime(dur) {
+                            var seconds = parseInt((dur/1000)%60)
+                                , minutes = parseInt((dur/(1000*60))%60)
+                                , hours = parseInt((dur/(1000*60*60))%24);
+                            hours = (hours<10) ? "0" + hours : hours;
+                            minutes = (minutes<10) ? "0" + minutes : minutes;
+                            seconds = (seconds<10) ? "0" + seconds : seconds;
+
+                            return hours + " hr " + minutes + " min " + seconds + " sec";
+                        };
+
+                        console.log("durationMs");
+                        console.log(durationMs);
+
+                        $scope.playlistDuration = msToTime(durationMs);
+                        $scope.durationMin = durationMs/1000/60;
+
+                        //calculate idealized playlist sizes (12 20 40 KB/sec)
+                        $scope.sizeNormalQuality = Math.ceil($scope.durationMin*60*12/1000);
+                        $scope.sizeHighQuality = Math.ceil($scope.durationMin*60*20/1000);
+                        $scope.sizeExtremeQuality = Math.ceil($scope.durationMin*60*40/1000);
+
+                        //calculate real playlist sizes (11,5 19,2 35,1 KB/sec)
+                        $scope.sizeNormalQualityReal = Math.ceil($scope.durationMin*60*11.5/1000);
+                        $scope.sizeHighQualityReal = Math.ceil($scope.durationMin*60*19.2/1000);
+                        $scope.sizeExtremeQualityReal = Math.ceil($scope.durationMin*60*35.1/1000);
+
+                        //display playlist data
                         $scope.showPlaylist = true;
+
                     }).error(function() {
                         $scope.errorMessage = 'uh oh.. playlist data could not be loaded..';
                     });
