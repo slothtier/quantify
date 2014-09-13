@@ -4,12 +4,16 @@
 
 angular.module('quantifyApp.controllers', [])
      .controller('QuantifyCtrl', ['$scope', function($scope) {
+        //TODO share link resolution G+ & FB
+        //TODO CSS
+        //TODO paralax scrolling
 
     }])
 
     .controller('AuthCtrl', ['$scope', function($scope) {
         $scope.authenticate = function() {
             //build authentication url => https://developer.spotify.com/web-api/authorization-guide/
+            //TODO authentication should be a service
             var accountUrl = 'https://accounts.spotify.com/authorize';
             var clientID ='client_id=2877dc4791af41e0b53de799f8cf2472';
             var redirectUri = 'redirect_uri=https%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html';
@@ -22,15 +26,18 @@ angular.module('quantifyApp.controllers', [])
     }])
 
     .controller('DataCtrl', function($scope, $http, $rootScope) {
-        $scope.invalidUrl = 'please enter a valid spotify playlist url or uri';
+        $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
         $scope.getPlaylistData = function() {
 
             //extract access token from url
             var accessToken = $rootScope.location.match(/([A-Za-z0-9_-]{155})/ig)[0];
 
             //validate entered url / uri
+            //TODO validation should be a service
+            //TODO username validation refactoring => should work for all usernames
+            //TODO http://open.spotify.com/us/116564372/plast/1ZLV2ByYUXHUbEdODuUjN8 => should be invalid
             if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) === -1) {
-                $scope.invalidUrl = 'please enter a valid spotify playlist url or uri';
+                $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
                 $scope.model.url = '';
                 $scope.showPlaylist = false;
             } else {
@@ -44,6 +51,9 @@ angular.module('quantifyApp.controllers', [])
                 var authString = 'Bearer '+ accessToken;
 
                 //get request for playlist data
+                //TODO parsing playlist response should be a service
+
+                //TODO fix for playlists of >100 tracks
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
 
@@ -74,6 +84,7 @@ angular.module('quantifyApp.controllers', [])
                             durationMs = durationMs + $scope.tracklist[j].duration_ms;
                         };
 
+                        //TODO time conversion should be a service
                         function msToTime(dur) {
                             var seconds = parseInt((dur/1000)%60)
                                 , minutes = parseInt((dur/(1000*60))%60)
@@ -90,6 +101,7 @@ angular.module('quantifyApp.controllers', [])
                         $scope.playlistDuration = msToTime(durationMs);
                         $scope.durationMin = durationMs/1000/60;
 
+                        //TODO siza calculations should be a service
                         //calculate idealized playlist sizes (12 20 40 KB/sec)
                         $scope.sizeNormalQuality = Math.ceil($scope.durationMin*60*12/1000);
                         $scope.sizeHighQuality = Math.ceil($scope.durationMin*60*20/1000);
