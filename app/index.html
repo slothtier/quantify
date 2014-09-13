@@ -21,6 +21,8 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+
+
     <div id="banner">
         <section class="container">
             <h1><a href="/quantify" id="logo">quantify</a></h1>
@@ -45,17 +47,14 @@
                 <span class="byline">show some love</span>
             </header>
             <ul class="icons">
-                <li class="active"><a href="/" class="fa fa-facebook"><span>Facebook</span></a></li>
-                <li><a href="/" class="fa fa-twitter"><span>Twitter</span></a></li>
+                <li><a href="https://twitter.com/faultier_" class="fa fa-twitter" target="_blank"><span>Twitter</span></a></li>
                 <li><a href="https://github.com/slothtier/quantify" class="fa fa-github" target="_blank"><span>Github</span></a></li>
-                <li><a href="/" class="fa fa-google-plus"><span>Google+</span></a></li>
             </ul>
-            <hr />
         </section>
 
         <!-- Copyright -->
         <div id="copyright">
-            Design: <a href="http://templated.co">TEMPLATED</a>
+            Design inspired by <a href="http://templated.co">TEMPLATED</a>
         </div>
     </div>
 
@@ -70,7 +69,10 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-
+    <!-- force https -->
+    <script>
+       var host = "slothtier.github.io/quantify"; if ((host == window.location.host) && (window.location.protocol != "https:"))window.location.protocol = "https";
+    </script>
     <!-- build:js(.) ./scripts/oldieshim.js -->
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>

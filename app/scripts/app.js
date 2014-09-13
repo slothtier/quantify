@@ -20,15 +20,12 @@ angular
     'quantifyApp.controllers'
   ])
   .run(function($rootScope, $location) {
-     //console.log($location.$$hash);
-        if($location.$$hash.search(/([A-Za-z0-9_-]{155})/ig) > -1){
-            $rootScope.location = $location.$$hash;
-            $location.path('/main');
-            $location.url($location.path());
-            //console.log($rootScope.location);
-            //console.log($location.$$hash);
-            //console.log("authenticated!");
-        }
+     //delete authentication token from url
+     if($location.$$hash.search(/([A-Za-z0-9_-]{155})/ig) > -1){
+         $rootScope.location = $location.$$hash;
+         $location.path('/main');
+         $location.url($location.path())
+     }
 
   })
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

@@ -12,7 +12,7 @@ angular.module('quantifyApp.controllers', [])
             //build authentication url => https://developer.spotify.com/web-api/authorization-guide/
             var accountUrl = 'https://accounts.spotify.com/authorize';
             var clientID ='client_id=2877dc4791af41e0b53de799f8cf2472';
-            var redirectUri = 'redirect_uri=http%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html';
+            var redirectUri = 'redirect_uri=https%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html';
             var authScope = 'scope=playlist-read-private';
             var responseType = 'response_type=token';
             var state = 'state=123';
@@ -22,6 +22,7 @@ angular.module('quantifyApp.controllers', [])
     }])
 
     .controller('DataCtrl', function($scope, $http, $rootScope) {
+        $scope.invalidUrl = 'please enter a valid spotify playlist url or uri';
         $scope.getPlaylistData = function() {
 
             //extract access token from url
@@ -29,8 +30,11 @@ angular.module('quantifyApp.controllers', [])
 
             //validate entered url / uri
             if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) === -1) {
-                $scope.errorMessage = 'please enter a valid spotify playlist url or uri';
+                $scope.invalidUrl = 'please enter a valid spotify playlist url or uri';
+                $scope.model.url = '';
+                $scope.showPlaylist = false;
             } else {
+                $scope.invalidUrl = '';
                 $scope.errorMessage = '';
 
                 //prepare request parameters
@@ -74,15 +78,14 @@ angular.module('quantifyApp.controllers', [])
                             var seconds = parseInt((dur/1000)%60)
                                 , minutes = parseInt((dur/(1000*60))%60)
                                 , hours = parseInt((dur/(1000*60*60))%24);
-                            hours = (hours<10) ? "0" + hours : hours;
-                            minutes = (minutes<10) ? "0" + minutes : minutes;
-                            seconds = (seconds<10) ? "0" + seconds : seconds;
+                            hours = (hours<10) ? '0' + hours : hours;
+                            minutes = (minutes<10) ? '0' + minutes : minutes;
+                            seconds = (seconds<10) ? '0' + seconds : seconds;
 
-                            return hours + " hr " + minutes + " min " + seconds + " sec";
+                            return hours + ' hr ' + minutes + ' min ' + seconds + ' sec';
                         };
 
-                        console.log("durationMs");
-                        console.log(durationMs);
+                        //console.log('durationMs: '+durationMs);
 
                         $scope.playlistDuration = msToTime(durationMs);
                         $scope.durationMin = durationMs/1000/60;
@@ -100,8 +103,16 @@ angular.module('quantifyApp.controllers', [])
                         //display playlist data
                         $scope.showPlaylist = true;
 
-                    }).error(function() {
-                        $scope.errorMessage = 'uh oh.. playlist data could not be loaded..';
+                    }).error(function(data) {
+                        if(data.error.status === 401){
+                            $scope.errorMessage = 'your access token has expired, please re-authenticate.';
+                        } else if(data.error.status === 404) {
+                            $scope.errorMessage = 'playlist data could not be found.';
+                        } else {
+                            $scope.errorMessage = 'uh oh.. something went horribly wrong.';
+                        };
+                        $scope.showPlaylist = false;
+                        //console.log('api error: '+data);
                     });
             }
 
@@ -113,7 +124,4 @@ angular.module('quantifyApp.controllers', [])
     })
 
 
-    .controller('UrlCtrl', ['$scope', function($scope) {
-        $scope.url = $scope.model.url;
-
-    }]);
+;
