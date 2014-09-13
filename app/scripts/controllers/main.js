@@ -17,28 +17,24 @@ angular.module('quantifyApp.controllers', [])
 
     .controller('DataCtrl', function($scope, $http, $rootScope) {
         $scope.getPlaylistData = function() {
-            //console.log($rootScope.location);
-            //console.log("bla!");
+
+            //extract access token from url
             var accessToken = $rootScope.location.match(/([A-Za-z0-9_-]{155})/ig)[0];
 
-
-            $http({method : 'POST',url : 'https://accounts.spotify.com/api/token', headers: { 'Authorization':'Basic Mjg3N2RjNDc5MWFmNDFlMGI1M2RlNzk5ZjhjZjI0NzI6MTUzOWEzY2ZjMzRmNGRlYmI5YjRkODA2Y2JmMDNmN2U=', 'grant_type':'client_credentials', 'Access-Control-Allow-Origin':'*'}}).
-                success(function(token) {
-                    $scope.tokenData = token;
-                }).error(function() {
-                    /* alert("token not retrieved") */
-                });
-
+            //validate entered url / uri
             if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) === -1) {
-                $scope.urlError = 'please enter a valid spotify playlist url or uri';
-                //window.alert('please enter a valid spotify playlist url or uri');
+                $scope.errorMessage = 'please enter a valid spotify playlist url or uri';
             } else {
-                $scope.urlError = '';
-                $scope.apiError = '';
+                $scope.errorMessage = '';
+
+                //prepare request parameters
                 var userID = $scope.model.url.match(/([A-Za-z0-9_]{8,40})/ig)[0];
-                var playUrl = $scope.model.url.substr($scope.model.url.search(/[\w]{22}/ig),22);
-                var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playUrl+'/tracks';
+                var playlistID = $scope.model.url.substr($scope.model.url.search(/[\w]{22}/ig),22);
+                var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playlistID+'/tracks';
+                //var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playlistID;
                 var authString = 'Bearer '+ accessToken;
+
+                //get request for playlist data
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
                         $scope.playlistName = data.name;
@@ -100,8 +96,7 @@ angular.module('quantifyApp.controllers', [])
                         console.log($scope.sizeExtremeQuality);
                         $scope.showPlaylist = true;
                     }).error(function() {
-                        $scope.apiError = 'uh oh.. playlist data could not be loaded..';
-                        //window.alert('playlist data could not be loaded');
+                        $scope.errorMessage = 'uh oh.. playlist data could not be loaded..';
                     });
             }
 
