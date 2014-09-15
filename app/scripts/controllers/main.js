@@ -25,8 +25,8 @@ angular.module('quantifyApp.controllers', [])
 
     }])
 
-    .controller('DataCtrl', function($scope, $http, $rootScope) {
-        $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
+    .controller('DataCtrl', function($scope, $http, $rootScope, parseUrl) {
+        $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
         $scope.getPlaylistData = function() {
 
             //extract access token from url
@@ -36,8 +36,15 @@ angular.module('quantifyApp.controllers', [])
             //TODO validation should be a service
             //TODO username validation refactoring => should work for all usernames
             //TODO http://open.spotify.com/us/116564372/plast/1ZLV2ByYUXHUbEdODuUjN8 => should be invalid
+
+            console.log('try out check url service:');
+            console.log("$scope.model: "+$scope.model.url);
+            console.log(parseUrl.parse($scope.model.url));
+            console.log('try out check url service ending');
+            console.log('id.user: '+parseUrl.parse($scope.model.url).user+'id.playlist: '+parseUrl.parse($scope.model.url).playlist);
+
             if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) === -1) {
-                $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
+                $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
                 $scope.model.url = '';
                 $scope.showPlaylist = false;
             } else {

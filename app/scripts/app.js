@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'ngRoute',
-    'quantifyApp.controllers'
+    'quantifyApp.controllers',
+    'quantifyApp.services'
   ])
   .run(function($rootScope, $location) {
      //delete authentication token from url
