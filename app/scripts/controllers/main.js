@@ -25,41 +25,33 @@ angular.module('quantifyApp.controllers', [])
 
     }])
 
-    .controller('DataCtrl', function($scope, $http, $rootScope, parseUrl) {
+    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl) {
         $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
+
         $scope.getPlaylistData = function() {
 
-            //extract access token from url
-            var accessToken = $rootScope.location.match(/([A-Za-z0-9_-]{155})/ig)[0];
-
-            //validate entered url / uri
-            //TODO validation should be a service
-            //TODO username validation refactoring => should work for all usernames
-            //TODO http://open.spotify.com/us/116564372/plast/1ZLV2ByYUXHUbEdODuUjN8 => should be invalid
-
-            console.log('try out check url service:');
-            console.log("$scope.model: "+$scope.model.url);
-            console.log(parseUrl.parse($scope.model.url));
-            console.log('try out check url service ending');
-            console.log('id.user: '+parseUrl.parse($scope.model.url).user+'id.playlist: '+parseUrl.parse($scope.model.url).playlist);
-
-            if ($scope.model === undefined || $scope.model === null || $scope.model.url.search(/[\w]{22}/ig) === -1) {
-                $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
+            if (parseUrl.parse($scope.model.url).user === undefined){
+                //display error message
+                $scope.invalidUrl = parseUrl.parse($scope.model.url);
+                //clear input box
                 $scope.model.url = '';
+                //hide old playlist data
                 $scope.showPlaylist = false;
             } else {
+                //clear error messages
                 $scope.invalidUrl = '';
                 $scope.errorMessage = '';
 
-                //prepare request parameters
-                var userID = $scope.model.url.match(/([A-Za-z0-9_]{8,40})/ig)[0];
-                var playlistID = $scope.model.url.substr($scope.model.url.search(/[\w]{22}/ig),22);
+                //prepare request for playlist data
+                var userID = parseUrl.parse($scope.model.url).user;
+                var playlistID = parseUrl.parse($scope.model.url).playlist;
                 var apiUrl = 'https://api.spotify.com/v1/users/'+userID+'/playlists/'+playlistID;
-                var authString = 'Bearer '+ accessToken;
+
+                //extract token from url
+                var authString = 'Bearer '+ $rootScope.location.match(/([A-Za-z0-9_-]{155})/ig)[0];
 
                 //get request for playlist data
                 //TODO parsing playlist response should be a service
-
                 //TODO fix for playlists of >100 tracks
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
@@ -76,11 +68,11 @@ angular.module('quantifyApp.controllers', [])
                         $scope.tracks = [];
                         $scope.tracklist = [];
 
-                        //push all items into tracks
+                        //push all items into tracks array
                         angular.forEach(trackResponse.items, function(item) {
                             $scope.tracks.push(item);
                         });
-                        //push all tracks into tracklist
+                        //push all tracks into tracklist array
                         for(var i=0;i<Object.keys($scope.tracks).length;i++) {
                             $scope.tracklist.push($scope.tracks[i].track);
                         }
@@ -103,12 +95,10 @@ angular.module('quantifyApp.controllers', [])
                             return hours + ' hr ' + minutes + ' min ' + seconds + ' sec';
                         };
 
-                        //console.log('durationMs: '+durationMs);
-
                         $scope.playlistDuration = msToTime(durationMs);
                         $scope.durationMin = durationMs/1000/60;
 
-                        //TODO siza calculations should be a service
+                        //TODO size calculations should be a service
                         //calculate idealized playlist sizes (12 20 40 KB/sec)
                         $scope.sizeNormalQuality = Math.ceil($scope.durationMin*60*12/1000);
                         $scope.sizeHighQuality = Math.ceil($scope.durationMin*60*20/1000);

@@ -33,7 +33,7 @@ angular
         $routeProvider
             .when('/main', {
             templateUrl: 'views/main.html',
-            controller: 'QuantifyCtrl'
+            controller: 'MainCtrl'
             })
             .when('/auth', {
                 templateUrl: 'views/auth.html',
