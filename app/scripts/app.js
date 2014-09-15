@@ -20,20 +20,20 @@ angular
     'quantifyApp.controllers',
     'quantifyApp.services'
   ])
-  .run(function($rootScope, $location) {
-     //delete authentication token from url
-     if($location.$$hash.search(/([A-Za-z0-9_-]{155})/ig) > -1){
-         $rootScope.location = $location.$$hash;
-         $location.path('/main');
-         $location.url($location.path())
-     }
+    .run(function ($rootScope, $location) {
+        //delete authentication token from url
+        if ($location.$$hash.search(/([A-Za-z0-9_-]{155})/ig) > -1) {
+            $rootScope.location = $location.$$hash;
+            $location.path('/main');
+            $location.url($location.path())
+        }
 
-  })
-  .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    })
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/main', {
-            templateUrl: 'views/main.html',
-            controller: 'MainCtrl'
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl'
             })
             .when('/auth', {
                 templateUrl: 'views/auth.html',
@@ -44,4 +44,4 @@ angular
             });
 
         $locationProvider.html5Mode(true);
-  }]);
+    }]);

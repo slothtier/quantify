@@ -7,6 +7,7 @@ angular.module('quantifyApp.controllers', [])
         //TODO share link resolution G+ & FB
         //TODO CSS
         //TODO paralax scrolling
+        //TODO SEO
 
     }])
 
@@ -25,10 +26,10 @@ angular.module('quantifyApp.controllers', [])
 
     }])
 
-    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl) {
+    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl, playlistData) {
         $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
 
-        $scope.getPlaylistData = function() {
+        $scope.quantify = function() {
 
             if (parseUrl.parse($scope.model.url).user === undefined){
                 //display error message
@@ -53,6 +54,8 @@ angular.module('quantifyApp.controllers', [])
                 //get request for playlist data
                 //TODO parsing playlist response should be a service
                 //TODO fix for playlists of >100 tracks
+
+
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
 
@@ -112,14 +115,23 @@ angular.module('quantifyApp.controllers', [])
                         //display playlist data
                         $scope.showPlaylist = true;
 
-                    }).error(function(data) {
-                        if(data.error.status === 401){
-                            $scope.errorMessage = 'your access token has expired, please re-authenticate.';
-                        } else if(data.error.status === 404) {
-                            $scope.errorMessage = 'playlist data could not be found.';
-                        } else {
-                            $scope.errorMessage = 'uh oh.. something went horribly wrong.';
-                        };
+                    }).error(function (data) {
+                        switch (data.error.status) {
+                            case 401:
+                                $scope.errorMessage = 'your access token has expired, please re-authenticate.';
+                                break;
+                            case 404:
+                                $scope.errorMessage = 'playlist data could not be found.';
+                                break;
+                            case 429:
+                                $scope.errorMessage = 'too many requests (rate limited)';
+                                break;
+                            case 503:
+                                $scope.errorMessage = 'Spotify appears to experience some problems currently.';
+                                break;
+                            default:
+                                $scope.errorMessage = 'uh oh.. something went horribly wrong.';
+                        }
                         $scope.showPlaylist = false;
                         //console.log('api error: '+data);
                     });
