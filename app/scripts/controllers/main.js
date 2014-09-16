@@ -26,7 +26,7 @@ angular.module('quantifyApp.controllers', [])
 
     }])
 
-    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl, playlistService, trackService) {
+    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl, playlistService, trackService, $q) {
         $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
 
         $scope.quantify = function() {
@@ -82,32 +82,43 @@ angular.module('quantifyApp.controllers', [])
                         var x = trackResponse.total;
                         var y = 100
 
-                        while (x>0){
-                            console.log('im in the loop: '+x);
-                            trackService.getTracks(apiUrlTracks, authString)
-                                .then(function (data) {
-                                    console.log('trackcount: '+data.total);
-                                    console.log('next url: '+data.next);
-                                    angular.forEach(data.items, function(item) {
-                                        $scope.tracksNew.push(item);
+
+                        var deferred = $q.defer();
+                        var promise = deferred.promise;
+
+                        promise.then(function(){
+                            while (x>0){
+                                console.log('im in the loop: '+x);
+                                trackService.getTracks(apiUrlTracks, authString)
+                                    .then(function (data) {
+                                        console.log('trackcount: '+data.total);
+                                        console.log('next url: '+data.next);
+                                        angular.forEach(data.items, function(item) {
+                                            $scope.tracksNew.push(item);
+                                        });
+                                        console.log('tracksNew: '+$scope.tracksNew);
+
+                                    }, function (error) {
+                                        console.log('error :', error.error.status);
                                     });
-                                    console.log('tracksNew: '+$scope.tracksNew);
+                                x = x - 100;
+                            }
+                        });
+                        deferred.resolve($scope.tracksNew);
 
-                                }, function (error) {
-                                    console.log('error :', error.error.status);
-                            });
-                            x = x - 100;
-                        }
+                            for(var i=0;i<Object.keys($scope.tracksNew).length;i++) {
+                                tracklistNew.push($scope.tracksNew[i].track);
+                            };
 
-                        for(var i=0;i<Object.keys($scope.tracksNew).length;i++) {
-                            tracklistNew.push($scope.tracksNew[i].track);
-                        };
+                            var durationMsNew = 0;
+                            for(var j=0;j<Object.keys($scope.tracksNew).length;j++) {
+                                durationMsNew = durationMsNew + tracklistNew[j].duration_ms;
+                            };
+                            console.log('duration: '+durationMsNew);
 
-                        var durationMsNew = 0;
-                        for(var j=0;j<Object.keys($scope.tracksNew).length;j++) {
-                            durationMsNew = durationMsNew + tracklistNew[j].duration_ms;
-                        };
-                        console.log('duration: '+durationMsNew);
+
+
+
 
 
 
