@@ -49,21 +49,21 @@ angular.module('quantifyApp.services', [])
             getTracks: function(apiUrl, authString) {
                 return $http({method: 'GET', url: apiUrl, headers: {'Authorization': authString}})
                     .then(function (response) {
-                        var helper = response.data;
-                        var helper1 = helper.tracks
+                        var dataHelper = response.data;
+                        var dataHelper2 = dataHelper.tracks
                         var tracksHelper = [];
                         var tracksListHelper = [];
                         var durationMsHelper = 0;
-                        console.log('response.data content: '+response.data);
-                        angular.forEach(helper1.items, function (item) {
+
+                        angular.forEach(dataHelper2.items, function (item) {
                             tracksHelper.push(item);
                         });
-                        console.log('trackshelper content: '+tracksHelper);
+                        //console.log('trackshelper content: '+tracksHelper);
 
                         for (var i = 0; i < Object.keys(tracksHelper).length; i++) {
                             tracksListHelper.push(tracksHelper[i].track);
                         };
-                        console.log('tracksListHelper content: '+tracksListHelper);
+                        //console.log('tracksListHelper content: '+tracksListHelper);
 
                         for (var j = 0; j < Object.keys(tracksHelper).length; j++) {
                             durationMsHelper = durationMsHelper + tracksListHelper[j].duration_ms;

@@ -73,11 +73,6 @@ angular.module('quantifyApp.controllers', [])
                         $scope.playlistItems = trackResponse.items;
 
 
-
-
-
-
-
                         $scope.tracksNew = [];
                         var tracklistNew = [];
                         var apiUrlTracks = apiUrl+'/tracks';
@@ -89,14 +84,15 @@ angular.module('quantifyApp.controllers', [])
 
                         var dataHelper = 0;
                         var dataHelper1 = 0;
-                        
+
+
                         //calculate total duration in ms
                         for (x; x < trackResponse.total;) {
-                            console.log('im in the loop: ' + x);
-                            console.log('calling : ' + apiUrlTracksNew);
+                            //console.log('im in the loop: ' + x);
+                            //console.log('calling : ' + apiUrlTracksNew);
                             trackService.getTracks(apiUrl, authString)
                                 .then(function (data) {
-                                    console.log('result of service: ' + data);
+                                    //console.log('result of service: ' + data);
                                     dataHelper = data;
 
                                     dataHelper1 = dataHelper1 + dataHelper;
@@ -109,35 +105,9 @@ angular.module('quantifyApp.controllers', [])
 
                             x = x + 100;
                             apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
-                            console.log('new url to call: ' + apiUrlTracksNew);
+                            //console.log('new url to call: ' + apiUrlTracksNew);
+
                         };
-
-
-
-
-
-
-
-                        //console.log('test'+$scope.tracksNew);
-                        console.log('$scope.totalduration'+$scope.totalduration);
-/*
-                            for(var i=0;i<Object.keys($scope.tracksNew).length;i++) {
-                                tracklistNew.push($scope.tracksNew[i].track);
-                            };
-
-                            var durationMsNew = 0;
-                            for(var j=0;j<Object.keys($scope.tracksNew).length;j++) {
-                                durationMsNew = durationMsNew + tracklistNew[j].duration_ms;
-                            };
-                            console.log('duration: '+durationMsNew);
-
-
-*/
-
-
-
-
-
 
 
 
