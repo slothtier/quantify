@@ -23,7 +23,6 @@ angular.module('quantifyApp.services', [])
             } else {
                 return 'enter a valid spotify playlist url or uri.';
             }
-            ;
         };
         return {
             parse: function (url) {
@@ -34,10 +33,23 @@ angular.module('quantifyApp.services', [])
 
     .factory('playlistService', function ($http, $q) {
         return {
-            getPlaylist: function(apiUrl, authString) {
+            getPlaylist: function (apiUrl, authString) {
+                return $http({method: 'GET', url: apiUrl, headers: {'Authorization': authString}})
+                    .then(function (response) {
+                        return response.data;
+                    }, function (response) {
+                        //api error
+                        return $q.reject(response.data);
+                    });
+            }
+        }
+    })
+    .factory('trackService', function ($http, $q) {
+        return {
+            getTracks: function(apiUrl, authString) {
                 return $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}})
                     .then(function(response) {
-                            return response.data;
+                        return response.data;
                     }, function(response) {
                         //api error
                         return $q.reject(response.data);

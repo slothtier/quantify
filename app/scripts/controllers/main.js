@@ -26,7 +26,7 @@ angular.module('quantifyApp.controllers', [])
 
     }])
 
-    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl, playlistService) {
+    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl, playlistService, trackService) {
         $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
 
         $scope.quantify = function() {
@@ -38,6 +38,7 @@ angular.module('quantifyApp.controllers', [])
                 $scope.model.url = '';
                 //hide old playlist data
                 $scope.showPlaylist = false;
+                $scope.errorMessage = '';
             } else {
                 //clear error messages
                 $scope.invalidUrl = '';
@@ -55,11 +56,112 @@ angular.module('quantifyApp.controllers', [])
                 //TODO parsing playlist response should be a service
                 //TODO fix for playlists of >100 tracks
 
-                $scope.test = '';
-
                 playlistService.getPlaylist(apiUrl, authString)
                     .then(function (data) {
-                        $scope.test = data.name;
+
+                        //decompose api response
+                        var completeResponse = data;
+                        var trackResponse = completeResponse.tracks;
+
+                        //extract playlist name, track count & track items
+                        $scope.playlistName = completeResponse.name;
+                        $scope.playlistTrackcount = trackResponse.total;
+                        $scope.playlistItems = trackResponse.items;
+
+
+
+
+
+
+
+                        $scope.tracksNew = [];
+                        var tracklistNew = [];
+                        var apiUrlTracks = apiUrl+'/tracks';
+
+                        console.log('trackResponse.total: '+trackResponse.total);
+                        var x = trackResponse.total;
+                        var y = 100
+
+                        while (x>0){
+                            console.log('im in the loop: '+x);
+                            trackService.getTracks(apiUrlTracks, authString)
+                                .then(function (data) {
+                                    console.log('trackcount: '+data.total);
+                                    console.log('next url: '+data.next);
+                                    angular.forEach(data.items, function(item) {
+                                        $scope.tracksNew.push(item);
+                                    });
+                                    console.log('tracksNew: '+$scope.tracksNew);
+
+                                }, function (error) {
+                                    console.log('error :', error.error.status);
+                            });
+                            x = x - 100;
+                        }
+
+                        for(var i=0;i<Object.keys($scope.tracksNew).length;i++) {
+                            tracklistNew.push($scope.tracksNew[i].track);
+                        };
+
+                        var durationMsNew = 0;
+                        for(var j=0;j<Object.keys($scope.tracksNew).length;j++) {
+                            durationMsNew = durationMsNew + tracklistNew[j].duration_ms;
+                        };
+                        console.log('duration: '+durationMsNew);
+
+
+
+
+
+
+
+
+                        var tracks = [];
+                        var tracklist = [];
+
+                        //push all items into tracks array
+                        angular.forEach(trackResponse.items, function(item) {
+                            tracks.push(item);
+                        });
+                        //push all tracks into tracklist array
+                        for(var i=0;i<Object.keys(tracks).length;i++) {
+                            tracklist.push(tracks[i].track);
+                        }
+
+                        //calculate total playlist duration in ms
+                        var durationMs = 0;
+                        for(var j=0;j<Object.keys(tracks).length;j++) {
+                            durationMs = durationMs + tracklist[j].duration_ms;
+                        };
+
+                        //TODO time conversion should be a service
+                        function msToTime(dur) {
+                            var seconds = parseInt((dur/1000)%60)
+                                , minutes = parseInt((dur/(1000*60))%60)
+                                , hours = parseInt((dur/(1000*60*60))%24);
+                            hours = (hours<10) ? '0' + hours : hours;
+                            minutes = (minutes<10) ? '0' + minutes : minutes;
+                            seconds = (seconds<10) ? '0' + seconds : seconds;
+
+                            return hours + ' hr ' + minutes + ' min ' + seconds + ' sec';
+                        };
+
+                        $scope.playlistDuration = msToTime(durationMs);
+                        $scope.durationMin = durationMs/1000/60;
+
+                        //TODO size calculations should be a service
+                        //calculate idealized playlist sizes (12 20 40 KB/sec)
+                        $scope.sizeNormalQuality = Math.ceil($scope.durationMin*60*12/1000);
+                        $scope.sizeHighQuality = Math.ceil($scope.durationMin*60*20/1000);
+                        $scope.sizeExtremeQuality = Math.ceil($scope.durationMin*60*40/1000);
+
+                        //calculate real playlist sizes (11,5 19,2 35,1 KB/sec)
+                        $scope.sizeNormalQualityReal = Math.ceil($scope.durationMin*60*11.5/1000);
+                        $scope.sizeHighQualityReal = Math.ceil($scope.durationMin*60*19.2/1000);
+                        $scope.sizeExtremeQualityReal = Math.ceil($scope.durationMin*60*35.1/1000);
+
+                        //display playlist data
+                        $scope.showPlaylist = true;
 
                     }, function (error) {
                         console.log('error :', error.error.status);
@@ -84,7 +186,7 @@ angular.module('quantifyApp.controllers', [])
                     });
 
 
-                console.log('test'+$scope.test);
+                /*
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
 
@@ -164,6 +266,7 @@ angular.module('quantifyApp.controllers', [])
                         $scope.showPlaylist = false;
                         //console.log('api error: '+data);
                     });
+                    */
             }
 
 
