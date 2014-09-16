@@ -79,16 +79,19 @@ angular.module('quantifyApp.controllers', [])
                         var apiUrlTracks = apiUrl+'/tracks';
 
                         console.log('trackResponse.total: '+trackResponse.total);
-                        var x = trackResponse.total;
-                        var y = 100
+                        var x = 0;
 
+                        var apiUrlTracksNew = apiUrlTracks;
 
                         var durationMsNew = 0;
 
-                        while (x > 0) {
+
+                        while (x < trackResponse.total) {
 
                             console.log('im in the loop: ' + x);
-                            trackService.getTracks(apiUrlTracks, authString)
+                            console.log('calling : ' + apiUrlTracksNew);
+
+                            playlistService.getPlaylist(apiUrlTracksNew, authString)
                                 .then(function (data) {
                                     console.log('trackcount: ' + data.total);
                                     console.log('next url: ' + data.next);
@@ -112,12 +115,17 @@ angular.module('quantifyApp.controllers', [])
                                     $scope.tracksNew = [];
                                     tracklistNew = [];
                                     $scope.totalduration = durationMsNew;
+
+
+
                                 }, function (error) {
                                     console.log('error :', error.error.status);
                                 });
 
+                            x = x + 100;
+                            apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
+                            console.log('new url to call: ' + apiUrlTracksNew);
 
-                            x = x - 100;
 
                         }
                         ;
@@ -126,8 +134,8 @@ angular.module('quantifyApp.controllers', [])
 
 
 
-                        console.log('test'+$scope.tracksNew);
-                        console.log('DURATION'+durationMsNew);
+                        //console.log('test'+$scope.tracksNew);
+                        console.log('$scope.totalduration'+$scope.totalduration);
 /*
                             for(var i=0;i<Object.keys($scope.tracksNew).length;i++) {
                                 tracklistNew.push($scope.tracksNew[i].track);

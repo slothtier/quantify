@@ -47,10 +47,10 @@ angular.module('quantifyApp.services', [])
     .factory('trackService', function ($http, $q) {
         return {
             getTracks: function(apiUrl, authString) {
-                return $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}})
-                    .then(function(response) {
+                return $http({method: 'GET', url: apiUrl, headers: {'Authorization': authString}})
+                    .then(function (response) {
                         return response.data;
-                    }, function(response) {
+                    }, function (response) {
                         //api error
                         return $q.reject(response.data);
                     });
