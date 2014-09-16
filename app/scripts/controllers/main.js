@@ -89,12 +89,11 @@ angular.module('quantifyApp.controllers', [])
 
                         var dataHelper = 0;
                         var dataHelper1 = 0;
-                        while (x < trackResponse.total) {
-
+                        
+                        //calculate total duration in ms
+                        for (x; x < trackResponse.total;) {
                             console.log('im in the loop: ' + x);
                             console.log('calling : ' + apiUrlTracksNew);
-
-
                             trackService.getTracks(apiUrl, authString)
                                 .then(function (data) {
                                     console.log('result of service: ' + data);
@@ -111,10 +110,9 @@ angular.module('quantifyApp.controllers', [])
                             x = x + 100;
                             apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
                             console.log('new url to call: ' + apiUrlTracksNew);
+                        };
 
 
-                        }
-                        ;
 
 
 
