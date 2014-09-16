@@ -55,25 +55,34 @@ angular.module('quantifyApp.controllers', [])
                 //TODO parsing playlist response should be a service
                 //TODO fix for playlists of >100 tracks
 
-                $scope.test = 'bla';
-                // This service's function returns a promise, but we'll deal with that shortly
-                playlistService.getPlaylist(apiUrl, authString)
-                    // then() called when son gets back
-                    .then(function (data) {
-                        // promise fulfilled
-                        console.log(data.name + 'good');
-                        bla(data.name);
-                        return data.name;
-                    }, function (error) {
-                        // promise rejected, could log the error with: console.log('error', error);
-                        console.log('error' + error);
-                    });
-                var bla = function test(name) {
-                    console.log('asdasdasdasd'+name);
-                    $scope.test = name;
-                    console.log('$scope.test:'+$scope.test);
+                $scope.test = '';
 
-                };
+                playlistService.getPlaylist(apiUrl, authString)
+                    .then(function (data) {
+                        $scope.test = data.name;
+
+                    }, function (error) {
+                        console.log('error :', error.error.status);
+                        switch (error.error.status) {
+                            case 401:
+                                $scope.errorMessage = 'your access token has expired, please re-authenticate.';
+                                break;
+                            case 404:
+                                $scope.errorMessage = 'playlist data could not be found.';
+                                break;
+                            case 429:
+                                $scope.errorMessage = 'too many requests (rate limited)';
+                                break;
+                            case 503:
+                                $scope.errorMessage = 'Spotify appears to experience some problems currently.';
+                                break;
+                            default:
+                                $scope.errorMessage = 'uh oh.. something went horribly wrong.';
+                        }
+                        $scope.showPlaylist = false;
+
+                    });
+
 
                 console.log('test'+$scope.test);
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).

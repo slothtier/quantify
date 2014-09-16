@@ -37,14 +37,9 @@ angular.module('quantifyApp.services', [])
             getPlaylist: function(apiUrl, authString) {
                 return $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}})
                     .then(function(response) {
-                        if (typeof response.data === 'object') {
                             return response.data;
-                        } else {
-                            return $q.reject(response.data);
-                        }
-
                     }, function(response) {
-                        // something went wrong
+                        //api error
                         return $q.reject(response.data);
                     });
             }
