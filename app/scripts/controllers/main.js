@@ -26,7 +26,7 @@ angular.module('quantifyApp.controllers', [])
 
     }])
 
-    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl, playlistData) {
+    .controller('MainCtrl', function($scope, $http, $rootScope, parseUrl, playlistService) {
         $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
 
         $scope.quantify = function() {
@@ -54,6 +54,21 @@ angular.module('quantifyApp.controllers', [])
                 //get request for playlist data
                 //TODO parsing playlist response should be a service
                 //TODO fix for playlists of >100 tracks
+
+                var test = '';
+                // This service's function returns a promise, but we'll deal with that shortly
+                playlistService.getPlaylist(apiUrl, authString)
+                    // then() called when son gets back
+                    .then(function (data) {
+                        // promise fulfilled
+                        console.log(data.name + 'good');
+                        test = data.name;
+                        console.log('1'+test);
+                    }, function (error) {
+                        // promise rejected, could log the error with: console.log('error', error);
+                        console.log('error' + error);
+                    });
+                console.log('2'+test);
 
 
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
