@@ -83,29 +83,52 @@ angular.module('quantifyApp.controllers', [])
                         var y = 100
 
 
-                        var deferred = $q.defer();
-                        var promise = deferred.promise;
+                        var durationMsNew = 0;
 
-                        promise.then(function(){
-                            while (x>0){
-                                console.log('im in the loop: '+x);
-                                trackService.getTracks(apiUrlTracks, authString)
-                                    .then(function (data) {
-                                        console.log('trackcount: '+data.total);
-                                        console.log('next url: '+data.next);
-                                        angular.forEach(data.items, function(item) {
-                                            $scope.tracksNew.push(item);
-                                        });
-                                        console.log('tracksNew: '+$scope.tracksNew);
+                        while (x > 0) {
 
-                                    }, function (error) {
-                                        console.log('error :', error.error.status);
+                            console.log('im in the loop: ' + x);
+                            trackService.getTracks(apiUrlTracks, authString)
+                                .then(function (data) {
+                                    console.log('trackcount: ' + data.total);
+                                    console.log('next url: ' + data.next);
+                                    angular.forEach(data.items, function (item) {
+                                        $scope.tracksNew.push(item);
                                     });
-                                x = x - 100;
-                            }
-                        });
-                        deferred.resolve($scope.tracksNew);
 
+                                    console.log('tracksNew: ' + $scope.tracksNew);
+                                    for (var i = 0; i < Object.keys($scope.tracksNew).length; i++) {
+                                        tracklistNew.push($scope.tracksNew[i].track);
+                                    }
+                                    ;
+
+                                    for (var j = 0; j < Object.keys($scope.tracksNew).length; j++) {
+                                        durationMsNew = durationMsNew + tracklistNew[j].duration_ms;
+                                    }
+                                    ;
+
+                                    console.log('duration: ' + durationMsNew);
+
+                                    $scope.tracksNew = [];
+                                    tracklistNew = [];
+                                    $scope.totalduration = durationMsNew;
+                                }, function (error) {
+                                    console.log('error :', error.error.status);
+                                });
+
+
+                            x = x - 100;
+
+                        }
+                        ;
+
+
+
+
+
+                        console.log('test'+$scope.tracksNew);
+                        console.log('DURATION'+durationMsNew);
+/*
                             for(var i=0;i<Object.keys($scope.tracksNew).length;i++) {
                                 tracklistNew.push($scope.tracksNew[i].track);
                             };
@@ -117,7 +140,7 @@ angular.module('quantifyApp.controllers', [])
                             console.log('duration: '+durationMsNew);
 
 
-
+*/
 
 
 
