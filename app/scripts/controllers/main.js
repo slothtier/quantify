@@ -55,22 +55,27 @@ angular.module('quantifyApp.controllers', [])
                 //TODO parsing playlist response should be a service
                 //TODO fix for playlists of >100 tracks
 
-                var test = '';
+                $scope.test = 'bla';
                 // This service's function returns a promise, but we'll deal with that shortly
                 playlistService.getPlaylist(apiUrl, authString)
                     // then() called when son gets back
                     .then(function (data) {
                         // promise fulfilled
                         console.log(data.name + 'good');
-                        test = data.name;
-                        console.log('1'+test);
+                        bla(data.name);
+                        return data.name;
                     }, function (error) {
                         // promise rejected, could log the error with: console.log('error', error);
                         console.log('error' + error);
                     });
-                console.log('2'+test);
+                var bla = function test(name) {
+                    console.log('asdasdasdasd'+name);
+                    $scope.test = name;
+                    console.log('$scope.test:'+$scope.test);
 
+                };
 
+                console.log('test'+$scope.test);
                 $http({method : 'GET',url : apiUrl, headers: {'Authorization': authString}}).
                     success(function(data) {
 
