@@ -56,6 +56,10 @@ angular.module('quantifyApp.controllers', [])
                 //TODO parsing playlist response should be a service
                 //TODO fix for playlists of >100 tracks
 
+
+
+
+
                 playlistService.getPlaylist(apiUrl, authString)
                     .then(function (data) {
 
@@ -83,40 +87,22 @@ angular.module('quantifyApp.controllers', [])
 
                         var apiUrlTracksNew = apiUrlTracks;
 
-                        var durationMsNew = 0;
-
-
+                        var dataHelper = 0;
+                        var dataHelper1 = 0;
                         while (x < trackResponse.total) {
 
                             console.log('im in the loop: ' + x);
                             console.log('calling : ' + apiUrlTracksNew);
 
-                            playlistService.getPlaylist(apiUrlTracksNew, authString)
+
+                            trackService.getTracks(apiUrl, authString)
                                 .then(function (data) {
-                                    console.log('trackcount: ' + data.total);
-                                    console.log('next url: ' + data.next);
-                                    angular.forEach(data.items, function (item) {
-                                        $scope.tracksNew.push(item);
-                                    });
+                                    console.log('result of service: ' + data);
+                                    dataHelper = data;
 
-                                    console.log('tracksNew: ' + $scope.tracksNew);
-                                    for (var i = 0; i < Object.keys($scope.tracksNew).length; i++) {
-                                        tracklistNew.push($scope.tracksNew[i].track);
-                                    }
-                                    ;
+                                    dataHelper1 = dataHelper1 + dataHelper;
 
-                                    for (var j = 0; j < Object.keys($scope.tracksNew).length; j++) {
-                                        durationMsNew = durationMsNew + tracklistNew[j].duration_ms;
-                                    }
-                                    ;
-
-                                    console.log('duration: ' + durationMsNew);
-
-                                    $scope.tracksNew = [];
-                                    tracklistNew = [];
-                                    $scope.totalduration = durationMsNew;
-
-
+                                    $scope.totalduration = dataHelper1;
 
                                 }, function (error) {
                                     console.log('error :', error.error.status);
