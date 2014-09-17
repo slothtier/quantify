@@ -78,13 +78,9 @@ angular.module('quantifyApp.controllers', [])
                         var apiUrlTracks = apiUrl+'/tracks';
 
                         console.log('trackResponse.total: '+trackResponse.total);
-                       ;
+                       
 
                         var apiUrlTracksNew = apiUrlTracks;
-
-
-                        var defer = $q.defer();
-
 
                         //calculate total duration in ms
 
@@ -102,16 +98,9 @@ angular.module('quantifyApp.controllers', [])
                                 .then(function (data) {
                                     //console.log('result of service: ' + data);
                                     dataHelper = data;
-
                                     dataHelper1 = dataHelper1 + dataHelper;
                                     console.log('dataHelper1 in loop = ' + dataHelper1);
-
-                                    if (x >= trackResponse.total) {
-                                        console.log('dataHelper1 in if = ' + dataHelper1);
-                                        //defer.resolve(dataHelper1);
-
-                                    }
-
+                                    $scope.totalduration = dataHelper1;
                                 }, function (error) {
                                     console.log('error :', error.error.status);
                                 });
@@ -124,9 +113,9 @@ angular.module('quantifyApp.controllers', [])
 
                        }
 
-                        defer.promise.then(function(dataHelper1){
-                            $scope.totalduration = dataHelper1;
-                        });
+
+
+
 
                         var tracks = [];
                         var tracklist = [];
