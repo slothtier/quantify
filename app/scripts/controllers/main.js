@@ -53,10 +53,6 @@ angular.module('quantifyApp.controllers', [])
                 var authString = 'Bearer ' + $rootScope.location.match(/([A-Za-z0-9_-]{155})/ig)[0];
 
                 //get request for playlist data
-                //TODO parsing playlist response should be a service
-                //TODO fix for playlists of >100 tracks
-
-
                 playlistService.getPlaylist(apiUrl, authString)
                     .then(function (data) {
 
@@ -75,12 +71,11 @@ angular.module('quantifyApp.controllers', [])
                         var apiUrlTracks = apiUrl + '/tracks';
 
 
-
                         //calculate total duration in ms
 
 
                         var apiUrlTracksNew = apiUrlTracks;
-                        var x = 0
+                        var x = 0;
                         var dataHelper = 0;
                         var dataHelper1 = 0;
                         var deferred = $q.defer();
@@ -88,85 +83,71 @@ angular.module('quantifyApp.controllers', [])
                         var y = 0;
 
 
-                        function bla() {
+                        for (x; x < trackResponse.total;) {
+                            //console.log('im in the loop: ' + x);
+                            //console.log('calling : ' + apiUrlTracksNew);
+
+                            trackService.getTracks(apiUrlTracksNew, authString)
+                                .then(function (data) {
+                                    //console.log('result of service: ' + data);
+                                    dataHelper = data;
+                                    dataHelper1 = dataHelper1 + dataHelper;
+                                    reqPromises.push(dataHelper1);
+                                    y = y + 1;
 
 
-                            for (x; x < trackResponse.total;) {
-                                //console.log('im in the loop: ' + x);
-                                //console.log('calling : ' + apiUrlTracksNew);
+                                }, function (error) {
+                                    console.log('error :', error.error.status);
+                                })
+                                .then(function () {
+                                    var b = reqPromises.length;
 
-                                trackService.getTracks(apiUrlTracksNew, authString)
-                                    .then(function (data) {
-                                        //console.log('result of service: ' + data);
-                                        dataHelper = data;
-                                        dataHelper1 = dataHelper1 + dataHelper;
-                                        console.log('dataHelper1 in loop = ' + dataHelper1);
+                                    $scope.playlistDuration = msToTime(reqPromises[b - 1]);
 
-                                        reqPromises.push(dataHelper1);
-                                        console.log('y: ' + y);
-                                        console.log('reqPromises: ' + reqPromises[y]);
-                                        y = y + 1;
-                                        if (reqPromises.length = y) {
-                                            $q.all(reqPromises).then(function () {
+                                    $scope.durationMin = reqPromises[b - 1] / 1000 / 60;
 
+                                    //TODO size calculations should be a service
+                                    //calculate idealized playlist sizes (12 20 40 KB/sec)
+                                    $scope.sizeNormalQuality = Math.ceil($scope.durationMin * 60 * 12 / 1000);
+                                    $scope.sizeHighQuality = Math.ceil($scope.durationMin * 60 * 20 / 1000);
+                                    $scope.sizeExtremeQuality = Math.ceil($scope.durationMin * 60 * 40 / 1000);
 
-                                                deferred.resolve();
+                                    //calculate real playlist sizes (11,5 19,2 35,1 KB/sec)
+                                    $scope.sizeNormalQualityReal = Math.ceil($scope.durationMin * 60 * 11.5 / 1000);
+                                    $scope.sizeHighQualityReal = Math.ceil($scope.durationMin * 60 * 19.2 / 1000);
+                                    $scope.sizeExtremeQualityReal = Math.ceil($scope.durationMin * 60 * 35.1 / 1000);
 
-                                            });
-                                        }
+                                    //TODO time conversion should be a service
+                                    function msToTime(dur) {
+                                        var seconds = parseInt((dur / 1000) % 60)
+                                            , minutes = parseInt((dur / (1000 * 60)) % 60)
+                                            , hours = parseInt(dur / (1000 * 60 * 60));
+                                        hours = (hours < 10) ? '0' + hours : hours;
+                                        minutes = (minutes < 10) ? '0' + minutes : minutes;
+                                        seconds = (seconds < 10) ? '0' + seconds : seconds;
 
-                                    }, function (error) {
-                                        console.log('error :', error.error.status);
-                                    })
-                                    .then(function () {
-                                        var b = reqPromises.length;
-
-                                        $scope.playlistDuration = msToTime(reqPromises[b - 1]);
-
-                                        $scope.durationMin = reqPromises[b - 1] / 1000 / 60;
-
-                                        //TODO size calculations should be a service
-                                        //calculate idealized playlist sizes (12 20 40 KB/sec)
-                                        $scope.sizeNormalQuality = Math.ceil($scope.durationMin * 60 * 12 / 1000);
-                                        $scope.sizeHighQuality = Math.ceil($scope.durationMin * 60 * 20 / 1000);
-                                        $scope.sizeExtremeQuality = Math.ceil($scope.durationMin * 60 * 40 / 1000);
-
-                                        //calculate real playlist sizes (11,5 19,2 35,1 KB/sec)
-                                        $scope.sizeNormalQualityReal = Math.ceil($scope.durationMin * 60 * 11.5 / 1000);
-                                        $scope.sizeHighQualityReal = Math.ceil($scope.durationMin * 60 * 19.2 / 1000);
-                                        $scope.sizeExtremeQualityReal = Math.ceil($scope.durationMin * 60 * 35.1 / 1000);
-
-                                        //TODO time conversion should be a service
-                                        function msToTime(dur) {
-                                            var seconds = parseInt((dur / 1000) % 60)
-                                                , minutes = parseInt((dur / (1000 * 60)) % 60)
-                                                , hours = parseInt(dur / (1000 * 60 * 60));
-                                            hours = (hours < 10) ? '0' + hours : hours;
-                                            minutes = (minutes < 10) ? '0' + minutes : minutes;
-                                            seconds = (seconds < 10) ? '0' + seconds : seconds;
-
-                                            return hours + ' hr ' + minutes + ' min ' + seconds + ' sec';
-                                        }
-                                        //display playlist data
-                                        $scope.showPlaylist = true;
-                                    })
-
-                                x = x + 100;
-                                apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
-                                //console.log('new url to call: ' + apiUrlTracksNew);
-                                console.log('x = ' + x);
+                                        return hours + ' hr ' + minutes + ' min ' + seconds + ' sec';
+                                    }
+                                })
+                                .then(function () {
+                                    if (reqPromises.length = y) {
+                                        $q.all(reqPromises).then(function () {
 
 
-                            }
+                                            deferred.resolve();
+                                            //display playlist data
+                                            $scope.showPlaylist = true;
 
+                                        });
+                                    }
+                                });
 
-                            return deferred.promise;
-
-
+                            x = x + 100;
+                            apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
                         }
 
 
-                        $scope.trigger = bla();
+                        return deferred.promise;
 
 
                     }, function (error) {

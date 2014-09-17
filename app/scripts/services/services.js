@@ -11,15 +11,15 @@ angular.module('quantifyApp.services', [])
             if (url.search('http://open.spotify.com/user/') > -1 && url.search(/[\w]{22}/ig) > -1 && url.search('/playlist/') > -1) {
                 url = url.replace('http://open.spotify.com/user/', '');
                 var urlHelper = url.split('/');
-                var id = {user: urlHelper[0], playlist: urlHelper[2]};
-                return id;
+                return {user: urlHelper[0], playlist: urlHelper[2]};
+
             }
             //check if spotify uri
             else if (url.search('spotify:user:') > -1 && url.search(/[\w]{22}$/ig) > -1 && url.search(':playlist:') > -1) {
                 url = url.replace('spotify:user:', '');
                 var urlHelper = url.split(':');
-                var id = {user: urlHelper[0], playlist: urlHelper[2]};
-                return id;
+                return {user: urlHelper[0], playlist: urlHelper[2]};
+
             } else {
                 return 'enter a valid spotify playlist url or uri.';
             }
@@ -46,31 +46,23 @@ angular.module('quantifyApp.services', [])
     })
     .factory('trackService', function ($http, $q) {
         return {
-            getTracks: function(apiUrl, authString) {
+            getTracks: function (apiUrl, authString) {
                 return $http({method: 'GET', url: apiUrl, headers: {'Authorization': authString}})
                     .then(function (response) {
                         var dataHelper = response.data;
-                        var dataHelper2 = response.data;
                         var tracksHelper = [];
                         var tracksListHelper = [];
                         var durationMsHelper = 0;
 
-                        angular.forEach(dataHelper2.items, function (item) {
+                        angular.forEach(dataHelper.items, function (item) {
                             tracksHelper.push(item);
                         });
-                        console.log('trackshelper content: '+tracksHelper[0]);
-
                         for (var i = 0; i < Object.keys(tracksHelper).length; i++) {
                             tracksListHelper.push(tracksHelper[i].track);
-                        };
-                        console.log('tracksListHelper content: '+tracksListHelper[0]);
-
+                        }
                         for (var j = 0; j < Object.keys(tracksListHelper).length; j++) {
                             durationMsHelper = durationMsHelper + tracksListHelper[j].duration_ms;
                         }
-                        ;
-
-
                         return durationMsHelper;
                     }, function (response) {
                         //api error

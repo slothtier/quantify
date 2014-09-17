@@ -12,11 +12,12 @@
     <p></p>
     <div ng-show="showPlaylist">
         <div>Your playlist {{playlistName}} contains {{playlistTrackcount}} songs and is {{playlistDuration}} long.</div>
-        <div>Estimated size:</div>
+        <div>Estimated size*:</div>
         <div>Normal Quality {{sizeNormalQuality}}MB</div>
         <div>High Quality {{sizeHighQuality}}MB</div>
         <div>Extreme Quality {{sizeExtremeQuality}}MB</div>
         <p></p>
+        <div>*calculated assuming 96 kbps for normal, 160 kbps for high and 320 kbps for extreme quality.</div>
         <!--
         <h1>Tracklisting:</h1>
         <div ng-repeat="item in tracklist">
