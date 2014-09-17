@@ -78,26 +78,39 @@ angular.module('quantifyApp.controllers', [])
                         var apiUrlTracks = apiUrl+'/tracks';
 
                         console.log('trackResponse.total: '+trackResponse.total);
-                        var x = 0;
+                       ;
 
                         var apiUrlTracksNew = apiUrlTracks;
 
+
+                        var defer = $q.defer();
+
+
+                        //calculate total duration in ms
+
+                        var x = 0
                         var dataHelper = 0;
                         var dataHelper1 = 0;
 
 
-                        //calculate total duration in ms
+
                         for (x; x < trackResponse.total;) {
                             //console.log('im in the loop: ' + x);
                             //console.log('calling : ' + apiUrlTracksNew);
+
                             trackService.getTracks(apiUrl, authString)
                                 .then(function (data) {
                                     //console.log('result of service: ' + data);
                                     dataHelper = data;
 
                                     dataHelper1 = dataHelper1 + dataHelper;
+                                    console.log('dataHelper1 in loop = ' + dataHelper1);
 
-                                    $scope.totalduration = dataHelper1;
+                                    if (x >= trackResponse.total) {
+                                        console.log('dataHelper1 in if = ' + dataHelper1);
+                                        //defer.resolve(dataHelper1);
+
+                                    }
 
                                 }, function (error) {
                                     console.log('error :', error.error.status);
@@ -106,11 +119,14 @@ angular.module('quantifyApp.controllers', [])
                             x = x + 100;
                             apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
                             //console.log('new url to call: ' + apiUrlTracksNew);
+                            console.log('x = ' + x);
+                            defer.resolve(dataHelper1);
 
-                        };
+                       }
 
-
-
+                        defer.promise.then(function(dataHelper1){
+                            $scope.totalduration = dataHelper1;
+                        });
 
                         var tracks = [];
                         var tracklist = [];
