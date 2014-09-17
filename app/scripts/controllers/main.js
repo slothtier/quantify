@@ -78,7 +78,7 @@ angular.module('quantifyApp.controllers', [])
                         var apiUrlTracks = apiUrl+'/tracks';
 
                         console.log('trackResponse.total: '+trackResponse.total);
-                       
+
 
                         var apiUrlTracksNew = apiUrlTracks;
 
@@ -94,7 +94,7 @@ angular.module('quantifyApp.controllers', [])
                             //console.log('im in the loop: ' + x);
                             //console.log('calling : ' + apiUrlTracksNew);
 
-                            trackService.getTracks(apiUrl, authString)
+                            trackService.getTracks(apiUrlTracksNew, authString)
                                 .then(function (data) {
                                     //console.log('result of service: ' + data);
                                     dataHelper = data;
@@ -109,7 +109,7 @@ angular.module('quantifyApp.controllers', [])
                             apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
                             //console.log('new url to call: ' + apiUrlTracksNew);
                             console.log('x = ' + x);
-                            defer.resolve(dataHelper1);
+
 
                        }
 

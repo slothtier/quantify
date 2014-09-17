@@ -50,7 +50,7 @@ angular.module('quantifyApp.services', [])
                 return $http({method: 'GET', url: apiUrl, headers: {'Authorization': authString}})
                     .then(function (response) {
                         var dataHelper = response.data;
-                        var dataHelper2 = dataHelper.tracks
+                        var dataHelper2 = response.data;
                         var tracksHelper = [];
                         var tracksListHelper = [];
                         var durationMsHelper = 0;
@@ -58,14 +58,14 @@ angular.module('quantifyApp.services', [])
                         angular.forEach(dataHelper2.items, function (item) {
                             tracksHelper.push(item);
                         });
-                        //console.log('trackshelper content: '+tracksHelper);
+                        console.log('trackshelper content: '+tracksHelper[0]);
 
                         for (var i = 0; i < Object.keys(tracksHelper).length; i++) {
                             tracksListHelper.push(tracksHelper[i].track);
                         };
-                        //console.log('tracksListHelper content: '+tracksListHelper);
+                        console.log('tracksListHelper content: '+tracksListHelper[0]);
 
-                        for (var j = 0; j < Object.keys(tracksHelper).length; j++) {
+                        for (var j = 0; j < Object.keys(tracksListHelper).length; j++) {
                             durationMsHelper = durationMsHelper + tracksListHelper[j].duration_ms;
                         }
                         ;
