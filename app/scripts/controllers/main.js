@@ -8,6 +8,8 @@ angular.module('quantifyApp.controllers', [])
         //TODO CSS
         //TODO paralax scrolling
         //TODO SEO
+        //TODO splash screen
+        //TODO enter to submit
 
     }])
 
