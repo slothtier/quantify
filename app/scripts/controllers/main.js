@@ -80,38 +80,113 @@ angular.module('quantifyApp.controllers', [])
                         console.log('trackResponse.total: '+trackResponse.total);
 
 
-                        var apiUrlTracksNew = apiUrlTracks;
+
 
                         //calculate total duration in ms
 
+
+                        var apiUrlTracksNew = apiUrlTracks;
                         var x = 0
                         var dataHelper = 0;
                         var dataHelper1 = 0;
+                        var deferred = $q.defer();
+                        var reqPromises = [];
+                        var y = 0;
+
+                        function bla(){
+
+
+                            for (x; x < trackResponse.total;) {
+                                //console.log('im in the loop: ' + x);
+                                //console.log('calling : ' + apiUrlTracksNew);
+
+                                trackService.getTracks(apiUrlTracksNew, authString)
+                                    .then(function (data) {
+                                        //console.log('result of service: ' + data);
+                                        dataHelper = data;
+                                        dataHelper1 = dataHelper1 + dataHelper;
+                                        console.log('dataHelper1 in loop = ' + dataHelper1);
+
+                                        reqPromises.push(dataHelper1);
+                                        console.log('y: '+y);
+                                        console.log('reqPromises: '+reqPromises[y]);
+                                        y = y+1;
+                                        if (reqPromises.length = y) {
+                                            $q.all(reqPromises).then(function () {
+                                                deferred.resolve();
+                                                $scope.totalduration = dataHelper1;
+                                            });
+                                        }
+
+                                    }, function (error) {
+                                        console.log('error :', error.error.status);
+                                    });
+
+                                x = x + 100;
+                                apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
+                                //console.log('new url to call: ' + apiUrlTracksNew);
+                                console.log('x = ' + x);
+
+
+                            }
+
+                            return deferred.promise;
 
 
 
-                        for (x; x < trackResponse.total;) {
-                            //console.log('im in the loop: ' + x);
-                            //console.log('calling : ' + apiUrlTracksNew);
 
-                            trackService.getTracks(apiUrlTracksNew, authString)
-                                .then(function (data) {
-                                    //console.log('result of service: ' + data);
-                                    dataHelper = data;
-                                    dataHelper1 = dataHelper1 + dataHelper;
-                                    console.log('dataHelper1 in loop = ' + dataHelper1);
-                                    $scope.totalduration = dataHelper1;
-                                }, function (error) {
-                                    console.log('error :', error.error.status);
+                        }
+                        var test = bla();
+                        console.log('test: '+test[6]);
+
+                        function ensureModule(name) {
+                            var deferred = $q.defer(),
+                                moduleState = modulesLoaded[name];
+                            if (moduleState === true) {
+                                deferred.resolve();
+                            } else if (moduleState && moduleState.then) {
+                                moduleState.then(function () {
+                                    deferred.resolve();
                                 });
+                            } else {
+                                modulesLoaded[name] = loadModule(name).then(function (module) {
+                                    var reqPromises = [];
+                                    if (module.requires && module.requires.length) {
+                                        module.requires.forEach(function (reqName) {
+                                            reqPromises.push(ensureModule(reqName));
+                                        });
+                                    }
+                                    if (module.requiresCss && module.requiresCss.length) {
+                                        reqPromises.push(requireCSS(module.requiresCss.map(buildPath)));
+                                    }
+                                    if (module.requiresHtml) {
+                                        var templatePaths = module.requiresHtml;
+                                        if (!angular.isArray(templatePaths)) {
+                                            templatePaths = [templatePaths];
+                                        }
+                                        _.each(templatePaths, function (path) {
+                                            reqPromises.push(requireHTML(buildPath(path)));
+                                        });
+                                    }
 
-                            x = x + 100;
-                            apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
-                            //console.log('new url to call: ' + apiUrlTracksNew);
-                            console.log('x = ' + x);
+                                    if (reqPromises.length > 0) {
+                                        $q.all(reqPromises).then(function () {
+                                            deferred.resolve();
+                                        });
+                                    } else {
+                                        deferred.resolve();
+                                    }
+
+                                });
+                            }
+                            return deferred.promise;
+
+                        }
 
 
-                       }
+
+
+
 
 
 
