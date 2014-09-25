@@ -4,13 +4,6 @@
 
 angular.module('quantifyApp.controllers', [])
     .controller('QuantifyCtrl', ['$scope', function ($scope) {
-        //TODO share link resolution G+ & FB
-        //TODO CSS
-        //TODO paralax scrolling
-        //TODO SEO
-        //TODO splash screen
-        //TODO enter to submit
-
     }])
 
     .controller('AuthCtrl', ['$scope', function ($scope) {
@@ -29,7 +22,7 @@ angular.module('quantifyApp.controllers', [])
     }])
 
     .controller('MainCtrl', function ($scope, $http, $rootScope, parseUrl, playlistService, trackService, $q) {
-        $scope.invalidUrl = 'enter a valid spotify playlist url or uri.';
+        $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
 
         $scope.quantify = function () {
 
@@ -159,10 +152,10 @@ angular.module('quantifyApp.controllers', [])
                                 $scope.errorMessage = 'your access token has expired, please re-authenticate.';
                                 break;
                             case 404:
-                                $scope.errorMessage = 'playlist data could not be found.';
+                                $scope.errorMessage = 'playlist data could not be found';
                                 break;
                             case 429:
-                                $scope.errorMessage = 'too many requests (rate limited)';
+                                $scope.errorMessage = 'too many requests, please try again later.';
                                 break;
                             case 503:
                                 $scope.errorMessage = 'Spotify appears to experience some problems currently.';

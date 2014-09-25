@@ -10,5 +10,8 @@ Required storage space is calculated with assumed idealized bitrates of 96 kbps 
 Based on real life tests, more realistic estimations can be achieved assuming 92, 153 and 281 kbps respectively.
 
 
-Have Fun.
+**Have Fun!**
 
+---
+
+licensed under [cc by 4.0](http://creativecommons.org/licenses/by/4.0/)
