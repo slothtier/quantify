@@ -21,7 +21,7 @@ angular.module('quantifyApp.services', [])
                 return {user: urlHelper[0], playlist: urlHelper[2]};
 
             } else {
-                return 'enter a valid spotify playlist url or uri.';
+                return 'enter a valid spotify playlist url or uri';
             }
         };
         return {
