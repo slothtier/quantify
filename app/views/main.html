@@ -4,7 +4,7 @@
         <form ng-submit="quantify()" id="quantify">
         <input type="text" class="input" ng-model="model.url" placeholder={{invalidUrl}} ng-init="model.url=''">
         </form>
-        <div class="wrapper style1">{{errorMessage}}</div>
+        <div class="wrapper style1" ng-bind-html="errorMessage"></div>
 
     </div>
     <p></p>

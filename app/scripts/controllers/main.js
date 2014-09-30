@@ -149,7 +149,7 @@ angular.module('quantifyApp.controllers', [])
                         console.log('error :', error.error.status);
                         switch (error.error.status) {
                             case 401:
-                                $scope.errorMessage = '~ your access token has expired, please re-authenticate ~';
+                                $scope.errorMessage = '~ your access token has expired, please <a href="/">re-authenticate</a> ~';
                                 break;
                             case 404:
                                 $scope.errorMessage = '~ playlist could not be found ~';
