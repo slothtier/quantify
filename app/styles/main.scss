@@ -13,7 +13,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 html, body {
   background: #222222;
   height: 100%;
-
+  min-heigth: 800px;
   min-width: 800px;
   vertical-align:middle;
   text-align: center;
@@ -79,10 +79,16 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+h1 a, h2 a, h3 a, h5 a, h6 a {
   color: inherit;
   text-decoration: none;
 }
+
+h4 a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 
 h2 {
   font-weight: 400;
@@ -297,9 +303,12 @@ ul.icons li {
   display: inline-block;
   text-align: center;
   line-height: 1em;
-  padding: 0.5em 1em;
-
-
+  padding: 0.5em 1.8em;
+  position:relative;
+  list-style:none;
+  clear:left;
+  float:center;
+  list-style:none;
 }
 
 ul.icons li:first-child {
@@ -506,7 +515,8 @@ input[type="button"].small,
 /* Wrapper */
 
 .wrapper {
-  padding: 6em 0em 4em 0em;
+  padding: 5em 0em 4em 0em;
+
 }
 
 .wrapper.style1 {
@@ -557,11 +567,13 @@ input[type="button"].small,
   text-align: center;
   color: white;
   height: 50vh;
+  min-height: 500px;
 }
 
 .wrapper.style3 .container {
   padding-left: 3em;
   padding-right: 3em;
+
 }
 
 .wrapper.style3 p {
@@ -744,6 +756,7 @@ input[type="button"].small,
   padding: 6em 0 2em 0;
   text-align: center;
   color: white;
+
 }
 
 #footer hr {
@@ -772,7 +785,7 @@ input[type="button"].small,
   position: relative;
   text-transform: uppercase;
   text-align: center;
-  padding: 3em 0em 3em 0em;
+  padding: 1em 0em 0.5em 0em;
   color: inherit;
   font-size: 0.75em;
   opacity: .20;

@@ -24,8 +24,8 @@ angular.module('quantifyApp.controllers', [])
     .controller('MainCtrl', function ($scope, $http, $rootScope, parseUrl, playlistService, trackService, $q) {
         $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
 
-        $scope.quantify = function () {
 
+        $scope.quantify = function () {
             if (parseUrl.parse($scope.model.url).user === undefined) {
                 //display error message
                 $scope.invalidUrl = parseUrl.parse($scope.model.url);
