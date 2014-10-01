@@ -24,7 +24,6 @@ angular.module('quantifyApp.controllers', [])
     .controller('MainCtrl', function ($scope, $http, $rootScope, parseUrl, playlistService, trackService, $q) {
         $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
 
-
         $scope.quantify = function () {
             if (parseUrl.parse($scope.model.url).user === undefined) {
                 //display error message
@@ -97,8 +96,7 @@ angular.module('quantifyApp.controllers', [])
                                 .then(function () {
                                     var b = reqPromises.length;
 
-                                    $scope.playlistDuration = msToTime(reqPromises[b - 1]);
-
+                                    $scope.playlistDuration = reqPromises[b - 1];
                                     $scope.durationMin = reqPromises[b - 1] / 1000 / 60;
 
                                     //TODO size calculations should be a service
@@ -111,18 +109,6 @@ angular.module('quantifyApp.controllers', [])
                                     $scope.sizeNormalQualityReal = Math.ceil($scope.durationMin * 60 * 11.5 / 1000);
                                     $scope.sizeHighQualityReal = Math.ceil($scope.durationMin * 60 * 19.2 / 1000);
                                     $scope.sizeExtremeQualityReal = Math.ceil($scope.durationMin * 60 * 35.1 / 1000);
-
-                                    //TODO time conversion should be a service
-                                    function msToTime(dur) {
-                                        var seconds = parseInt((dur / 1000) % 60)
-                                            , minutes = parseInt((dur / (1000 * 60)) % 60)
-                                            , hours = parseInt(dur / (1000 * 60 * 60));
-                                        hours = (hours < 10) ? '0' + hours : hours;
-                                        minutes = (minutes < 10) ? '0' + minutes : minutes;
-                                        seconds = (seconds < 10) ? '0' + seconds : seconds;
-
-                                        return hours + ' hr ' + minutes + ' min ' + seconds + ' sec';
-                                    }
                                 })
                                 .then(function () {
                                     if (reqPromises.length = y) {
@@ -149,7 +135,7 @@ angular.module('quantifyApp.controllers', [])
                         console.log('error :', error.error.status);
                         switch (error.error.status) {
                             case 401:
-                                $scope.errorMessage = '~ your access token has expired, please <a href="/">re-authenticate</a> ~';
+                                $scope.errorMessage = '~ your access token has expired, please <a href="#">re-authenticate</a> ~';
                                 break;
                             case 404:
                                 $scope.errorMessage = '~ playlist could not be found ~';

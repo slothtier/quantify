@@ -19,7 +19,8 @@ angular
     'ngRoute',
     'quantifyApp.controllers',
     'quantifyApp.services',
-    'quantifyApp.directives'
+    'quantifyApp.directives',
+    'quantifyApp.displayduration'
   ])
     .run(function ($rootScope, $location) {
         //delete authentication token from url

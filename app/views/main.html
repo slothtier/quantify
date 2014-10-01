@@ -15,10 +15,10 @@
 
     <div ng-show="showPlaylist">
 
-        <div>Your playlist <h2>{{playlistName}}</h2> contains {{playlistTrackcount}} songs and is {{playlistDuration}} long.</div>
+        <div>Your playlist <h2>{{playlistName}}</h2> contains {{playlistTrackcount}} songs and is {{playlistDuration|displayduration}} long.</div>
         <br>
         <div>Estimated size</div>
-        <div>Normal Quality ~ {{sizeNormalQuality}} MB</div>
+        <div>Normal Quality ~ {{sizeNormalQuality}} MB test</div>
         <div>High Quality ~ {{sizeHighQuality}} MB</div>
         <div>Extreme Quality ~ {{sizeExtremeQuality}} MB</div>
         <h4>assuming bitrates of 96 kbps for Normal, 160 kbps for High and 320 kbps for Extreme <a href="https://support.spotify.com/us/learn-more/faq/#!/article/What-bitrate-does-Spotify-use-for-streaming/" target="_blank">quality</a></h4>
