@@ -97,18 +97,18 @@ angular.module('quantifyApp.controllers', [])
                                     var b = reqPromises.length;
 
                                     $scope.playlistDuration = reqPromises[b - 1];
-                                    $scope.durationMin = reqPromises[b - 1] / 1000 / 60;
+                                    $scope.durationSec = reqPromises[b - 1] / 1000;
 
                                     //TODO size calculations should be a service
                                     //calculate idealized playlist sizes (12 20 40 KB/sec)
-                                    $scope.sizeNormalQuality = Math.ceil($scope.durationMin * 60 * 12 / 1000);
-                                    $scope.sizeHighQuality = Math.ceil($scope.durationMin * 60 * 20 / 1000);
-                                    $scope.sizeExtremeQuality = Math.ceil($scope.durationMin * 60 * 40 / 1000);
+                                    $scope.sizeNormalQuality = Math.ceil($scope.durationSec * 12 / 1000);
+                                    $scope.sizeHighQuality = Math.ceil($scope.durationSec * 20 / 1000);
+                                    $scope.sizeExtremeQuality = Math.ceil($scope.durationSec * 40 / 1000);
 
                                     //calculate real playlist sizes (11,5 19,2 35,1 KB/sec)
-                                    $scope.sizeNormalQualityReal = Math.ceil($scope.durationMin * 60 * 11.5 / 1000);
-                                    $scope.sizeHighQualityReal = Math.ceil($scope.durationMin * 60 * 19.2 / 1000);
-                                    $scope.sizeExtremeQualityReal = Math.ceil($scope.durationMin * 60 * 35.1 / 1000);
+                                    $scope.sizeNormalQualityReal = Math.ceil($scope.durationSec * 11.5 / 1000);
+                                    $scope.sizeHighQualityReal = Math.ceil($scope.durationSec * 19.2 / 1000);
+                                    $scope.sizeExtremeQualityReal = Math.ceil($scope.durationSec * 35.1 / 1000);
                                 })
                                 .then(function () {
                                     if (reqPromises.length = y) {

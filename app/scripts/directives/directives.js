@@ -1,6 +1,3 @@
-/**
- * Created by nholzer on 30.09.2014.
- */
 'use strict';
 
 angular.module('quantifyApp.directives', [])

@@ -1,6 +1,3 @@
-/**
- * Created by nholzer on 01.10.2014.
- */
 'use strict';
 
 angular.module('quantifyApp.displayduration', [])
