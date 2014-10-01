@@ -144,7 +144,7 @@ angular.module('quantifyApp.controllers', [])
                                 $scope.errorMessage = '~ too many requests, please try again later ~';
                                 break;
                             case 503:
-                                $scope.errorMessage = '~ Spotify appears to experience some problems currently ~';
+                                $scope.errorMessage = '~ the Spotify API appears to experience technical difficulties currently ~';
                                 break;
                             default:
                                 $scope.errorMessage = '~ uh oh.. something went horribly wrong ~';
