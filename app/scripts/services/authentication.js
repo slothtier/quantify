@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('quantifyApp.auth', [])
+angular.module('quantifyApp.authentication', [])
 
     .factory('authService', function () {
         var buildUrl = function () {
-            //build authentication url => https://developer.spotify.com/web-api/authorization-guide/
+            //=> https://developer.spotify.com/web-api/authorization-guide/
             var accountUrl = 'https://accounts.spotify.com/authorize';
             var clientID = 'client_id=2877dc4791af41e0b53de799f8cf2472';
             var redirectUri = 'redirect_uri=https%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html';

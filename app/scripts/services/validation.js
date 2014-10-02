@@ -1,7 +1,5 @@
 'use strict';
 
-/* Services */
-
 angular.module('quantifyApp.validation', [])
 
     .factory('url', function () {
@@ -23,10 +21,10 @@ angular.module('quantifyApp.validation', [])
             } else {
                 return false;
             }
-        };
+        }
         return {
             validate: function (url) {
                 return validateUrl(url);
             }
-        };
+        }
     })

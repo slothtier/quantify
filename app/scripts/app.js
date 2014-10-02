@@ -20,6 +20,7 @@ angular
     'quantifyApp.main',
     'quantifyApp.auth',
     'quantifyApp.api',
+    'quantifyApp.authentication',
     'quantifyApp.validation',
     'quantifyApp.calculation',
     'quantifyApp.scrolling',

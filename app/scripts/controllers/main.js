@@ -106,5 +106,5 @@ angular.module('quantifyApp.main', [])
                         $scope.showPlaylist = false;
                     });
             }
-        };
-    });
+        }
+    })
