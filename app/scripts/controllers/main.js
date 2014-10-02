@@ -21,15 +21,15 @@ angular.module('quantifyApp.controllers', [])
 
     }])
 
-    .controller('MainCtrl', function ($scope, $http, $rootScope, parseUrl, playlistService, trackService, $q) {
-        $scope.invalidUrl = 'enter a valid spotify playlist url or uri';
+    .controller('MainCtrl', function ($scope, $http, $rootScope, url, playlistService, trackService, $q, size) {
+        //$scope.invalidUrl = 'enter a valid spotify playlist url or uri';
 
         $scope.quantify = function () {
-            if (parseUrl.parse($scope.model.url).user === undefined) {
+            if (url.validate($scope.url).user === undefined) {
                 //display error message
-                $scope.invalidUrl = parseUrl.parse($scope.model.url);
+                $scope.invalidUrl = url.validate($scope.url);
                 //clear input box
-                $scope.model.url = '';
+                $scope.url = '';
                 //hide old playlist data
                 $scope.showPlaylist = false;
                 $scope.errorMessage = '';
@@ -39,8 +39,8 @@ angular.module('quantifyApp.controllers', [])
                 $scope.errorMessage = '';
 
                 //prepare request for playlist data
-                var userID = parseUrl.parse($scope.model.url).user;
-                var playlistID = parseUrl.parse($scope.model.url).playlist;
+                var userID = url.validate($scope.url).user;
+                var playlistID = url.validate($scope.url).playlist;
                 var apiUrl = 'https://api.spotify.com/v1/users/' + userID + '/playlists/' + playlistID;
 
                 //extract token from url
@@ -54,11 +54,9 @@ angular.module('quantifyApp.controllers', [])
                         var completeResponse = data;
                         var trackResponse = completeResponse.tracks;
 
-                        //extract playlist name, track count & track items
+                        //extract playlist name & track count
                         $scope.playlistName = completeResponse.name;
                         $scope.playlistTrackcount = trackResponse.total;
-                        $scope.playlistItems = trackResponse.items;
-
 
                         $scope.tracksNew = [];
 
@@ -71,7 +69,6 @@ angular.module('quantifyApp.controllers', [])
                         var apiUrlTracksNew = apiUrlTracks;
                         var x = 0;
                         var dataHelper = 0;
-                        var dataHelper1 = 0;
                         var deferred = $q.defer();
                         var reqPromises = [];
                         var y = 0;
@@ -84,31 +81,27 @@ angular.module('quantifyApp.controllers', [])
                             trackService.getTracks(apiUrlTracksNew, authString)
                                 .then(function (data) {
                                     //console.log('result of service: ' + data);
-                                    dataHelper = data;
-                                    dataHelper1 = dataHelper1 + dataHelper;
-                                    reqPromises.push(dataHelper1);
-                                    y = y + 1;
+                                    dataHelper += data;
+                                    reqPromises.push(dataHelper);
+                                    y += 1;
 
 
                                 }, function (error) {
-                                    console.log('error :', error.error.status);
+                                    $scope.errorMessage = error.error.status;
                                 })
                                 .then(function () {
                                     var b = reqPromises.length;
 
                                     $scope.playlistDuration = reqPromises[b - 1];
-                                    $scope.durationSec = reqPromises[b - 1] / 1000;
 
-                                    //TODO size calculations should be a service
-                                    //calculate idealized playlist sizes (12 20 40 KB/sec)
-                                    $scope.sizeNormalQuality = Math.ceil($scope.durationSec * 12 / 1000);
-                                    $scope.sizeHighQuality = Math.ceil($scope.durationSec * 20 / 1000);
-                                    $scope.sizeExtremeQuality = Math.ceil($scope.durationSec * 40 / 1000);
+                                    var durationSec = reqPromises[b - 1] / 1000;
+                                    $scope.sizeNormalQuality = size.calculate(durationSec, 'normal');
+                                    $scope.sizeHighQuality = size.calculate(durationSec, 'high');
+                                    $scope.sizeExtremeQuality = size.calculate(durationSec, 'extreme');
 
-                                    //calculate real playlist sizes (11,5 19,2 35,1 KB/sec)
-                                    $scope.sizeNormalQualityReal = Math.ceil($scope.durationSec * 11.5 / 1000);
-                                    $scope.sizeHighQualityReal = Math.ceil($scope.durationSec * 19.2 / 1000);
-                                    $scope.sizeExtremeQualityReal = Math.ceil($scope.durationSec * 35.1 / 1000);
+                                    $scope.sizeNormalQualityReal = size.calculate(durationSec, 'normal_real');
+                                    $scope.sizeHighQualityReal = size.calculate(durationSec, 'high_real');
+                                    $scope.sizeExtremeQualityReal = size.calculate(durationSec, 'extreme_real');
                                 })
                                 .then(function () {
                                     if (reqPromises.length = y) {
@@ -132,25 +125,8 @@ angular.module('quantifyApp.controllers', [])
 
 
                     }, function (error) {
-                        console.log('error :', error.error.status);
-                        switch (error.error.status) {
-                            case 401:
-                                $scope.errorMessage = '~ your access token has expired, please <a href="#">re-authenticate</a> ~';
-                                break;
-                            case 404:
-                                $scope.errorMessage = '~ playlist could not be found ~';
-                                break;
-                            case 429:
-                                $scope.errorMessage = '~ too many requests, please try again later ~';
-                                break;
-                            case 503:
-                                $scope.errorMessage = '~ the Spotify API appears to experience technical difficulties currently ~';
-                                break;
-                            default:
-                                $scope.errorMessage = '~ uh oh.. something went horribly wrong ~';
-                        }
+                        $scope.errorMessage = error.error.status;
                         $scope.showPlaylist = false;
-
                     });
             }
         };

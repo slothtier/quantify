@@ -18,9 +18,13 @@ angular
     'ngTouch',
     'ngRoute',
     'quantifyApp.controllers',
-    'quantifyApp.services',
+    'quantifyApp.api',
+    'quantifyApp.validation',
+    'quantifyApp.calculation',
     'quantifyApp.directives',
-    'quantifyApp.displayduration'
+    'quantifyApp.displayduration',
+    'quantifyApp.errorhandling',
+    'quantifyApp.formatfilesize'
   ])
     .run(function ($rootScope, $location) {
         //delete authentication token from url
