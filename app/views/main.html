@@ -1,20 +1,14 @@
 <div ng-controller="MainCtrl">
     <div scroll-on-submit scroll-to="#quantify">
-
         <form ng-submit="quantify()" id="quantify">
         <input type="text" class="input" ng-model="url" placeholder={{invalidUrl|validationError}} ng-init="url=''">
         </form>
         <div class="wrapper style1" ng-bind-html="errorMessage|apiError"></div>
-
     </div>
     <p></p>
-    <div scroll-on-click scroll-to="#quantify">
-    <button ng-click="quantify()" class="button alt" type="button" >Quantify</button>
-    </div>
+    <button ng-click="quantify()" class="button alt" type="button" scroll-on-click scroll-to="#quantify">Quantify</button>
     <p></p>
-
     <div ng-show="showPlaylist">
-
         <div>Your playlist <h2>{{playlistName}}</h2> contains {{playlistTrackcount}} songs and is {{playlistDuration|displayduration}} long.</div>
         <br>
         <div>Estimated size</div>
