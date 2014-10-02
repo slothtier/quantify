@@ -17,7 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ngRoute',
-    'quantifyApp.controllers',
+    'quantifyApp.main',
     'quantifyApp.auth',
     'quantifyApp.api',
     'quantifyApp.validation',

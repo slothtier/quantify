@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('quantifyApp.controllers', [])
+angular.module('quantifyApp.main', [])
 
     .controller('MainCtrl', function ($scope, $http, $rootScope, url, playlistService, trackService, $q, size) {
 
