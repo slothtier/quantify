@@ -18,10 +18,11 @@ angular
     'ngTouch',
     'ngRoute',
     'quantifyApp.controllers',
+    'quantifyApp.auth',
     'quantifyApp.api',
     'quantifyApp.validation',
     'quantifyApp.calculation',
-    'quantifyApp.directives',
+    'quantifyApp.scrolling',
     'quantifyApp.displayduration',
     'quantifyApp.errorhandling',
     'quantifyApp.formatfilesize'

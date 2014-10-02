@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('quantifyApp.directives', [])
+angular.module('quantifyApp.scrolling', [])
 
     .directive('scrollOnClick', function() {
         return {

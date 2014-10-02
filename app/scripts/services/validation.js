@@ -21,7 +21,7 @@ angular.module('quantifyApp.validation', [])
                 return {user: urlHelper[0], playlist: urlHelper[2]};
 
             } else {
-                return 'invalid';
+                return false;
             }
         };
         return {

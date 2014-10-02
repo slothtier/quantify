@@ -1,41 +1,18 @@
 'use strict';
 
-/* Controllers */
-
 angular.module('quantifyApp.controllers', [])
-    .controller('QuantifyCtrl', ['$scope', function ($scope) {
-    }])
-
-    .controller('AuthCtrl', ['$scope', function ($scope) {
-        $scope.authenticate = function () {
-            //build authentication url => https://developer.spotify.com/web-api/authorization-guide/
-            //TODO authentication should be a service
-            var accountUrl = 'https://accounts.spotify.com/authorize';
-            var clientID = 'client_id=2877dc4791af41e0b53de799f8cf2472';
-            var redirectUri = 'redirect_uri=https%3A%2F%2Fslothtier.github.io%2Fquantify%2Findex.html';
-            var authScope = 'scope=playlist-read-private';
-            var responseType = 'response_type=token';
-            var state = 'state=123';
-            window.location.href = accountUrl + '?' + clientID + '&' + redirectUri + '&' + authScope + '&' + responseType + '&' + state;
-        };
-
-    }])
 
     .controller('MainCtrl', function ($scope, $http, $rootScope, url, playlistService, trackService, $q, size) {
-        //$scope.invalidUrl = 'enter a valid spotify playlist url or uri';
 
         $scope.quantify = function () {
-            if (url.validate($scope.url).user === undefined) {
-                //display error message
-                $scope.invalidUrl = url.validate($scope.url);
+            if (url.validate($scope.url) === false) {
                 //clear input box
                 $scope.url = '';
                 //hide old playlist data
                 $scope.showPlaylist = false;
                 $scope.errorMessage = '';
             } else {
-                //clear error messages
-                $scope.invalidUrl = '';
+                //clear error message
                 $scope.errorMessage = '';
 
                 //prepare request for playlist data
