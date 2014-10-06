@@ -6,9 +6,8 @@ angular.module('quantifyApp.main', [])
 
         $scope.quantify = function () {
             if (url.validate($scope.url) === false) {
-                //clear input box
+                //clear input box & hide old playlist data
                 $scope.url = '';
-                //hide old playlist data
                 $scope.showPlaylist = false;
                 $scope.errorMessage = '';
             } else {
@@ -39,10 +38,6 @@ angular.module('quantifyApp.main', [])
 
                         var apiUrlTracks = apiUrl + '/tracks';
 
-
-                        //calculate total duration in ms
-
-
                         var apiUrlTracksNew = apiUrlTracks;
                         var x = 0;
                         var dataHelper = 0;
@@ -50,14 +45,10 @@ angular.module('quantifyApp.main', [])
                         var reqPromises = [];
                         var y = 0;
 
-
                         for (x; x < trackResponse.total;) {
-                            //console.log('im in the loop: ' + x);
-                            //console.log('calling : ' + apiUrlTracksNew);
 
                             trackService.getTracks(apiUrlTracksNew, authString)
                                 .then(function (data) {
-                                    //console.log('result of service: ' + data);
                                     dataHelper += data;
                                     reqPromises.push(dataHelper);
                                     y += 1;
@@ -93,7 +84,7 @@ angular.module('quantifyApp.main', [])
                                     }
                                 });
 
-                            x = x + 100;
+                            x += 100;
                             apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
                         }
 
