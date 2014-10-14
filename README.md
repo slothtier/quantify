@@ -9,6 +9,7 @@ As retrieval of playlist data via the API requires authentication, QUANTIFY uses
 Required storage space is calculated with assumed idealized bitrates of 96 kbps for normal, 160 kbps for high and 320 kbps for extreme [quality](https://support.spotify.com/us/learn-more/faq/#!/article/What-bitrate-does-Spotify-use-for-streaming/).
 Based on real life tests, more realistic estimations can be achieved assuming 92, 153 and 281 kbps respectively.
 
+[QUANTIFY Demo](https://slothtier.github.io/quantify/). 
 
 **Have Fun!**
 

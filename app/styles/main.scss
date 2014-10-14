@@ -3,7 +3,7 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
 /*
-	Solarize by TEMPLATED
+	inspired by Solarize by TEMPLATED
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
@@ -222,32 +222,6 @@ input[type="email"] {
   color: rgba(85, 85, 85, 0.5) !important;
 }
 
-/* Image */
-
-.image {
-  border: 0;
-  position: relative;
-}
-
-.image.fit {
-  display: block;
-}
-
-.image.fit img {
-  display: block;
-  width: 100%;
-}
-
-.image.feature {
-  display: block;
-  margin: 0 0 2em 0;
-}
-
-.image.feature img {
-  display: block;
-  width: 100%;
-}
-
 /* Icon */
 
 .icon {
@@ -408,35 +382,6 @@ ul.special-icons .fa {
 }
 
 
-
-/* Tables */
-
-table {
-  width: 100%;
-}
-
-table.default {
-  width: 100%;
-}
-
-table.default tbody tr {
-  border-bottom: solid 1px #82b440;
-}
-
-table.default td {
-  padding: 0.5em 1em 0.5em 1em;
-}
-
-table.default th {
-  font-weight: 700;
-  padding: 0.5em 1em 0.5em 1em;
-  text-align: left;
-}
-
-table.default thead {
-  background: #555555;
-  color: #fff;
-}
 
 /* Button */
 
@@ -674,4 +619,3 @@ input[type="button"].small,
   color: inherit;
 }
 
-/* Extra */
