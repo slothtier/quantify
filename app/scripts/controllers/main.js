@@ -11,91 +11,97 @@ angular.module('quantifyApp.main', [])
                 $scope.showPlaylist = false;
                 $scope.errorMessage = '';
             } else {
-                //clear error message
-                $scope.errorMessage = '';
+                //only request playlist data if url has changed
+                if ($scope.url != $scope.tmpUrl) {
 
-                //prepare request for playlist data
-                var userID = url.validate($scope.url).user;
-                var playlistID = url.validate($scope.url).playlist;
-                var apiUrl = 'https://api.spotify.com/v1/users/' + userID + '/playlists/' + playlistID;
+                    $scope.tmpUrl = $scope.url;
 
-                //extract token from url
-                var authString = 'Bearer ' + $rootScope.location.match(/([A-Za-z0-9_-]{155,})/ig)[0];
+                    //clear error message
+                    $scope.errorMessage = '';
 
-                //get request for playlist data
-                playlistService.getPlaylist(apiUrl, authString)
-                    .then(function (data) {
+                    //prepare request for playlist data
+                    var userID = url.validate($scope.url).user;
+                    var playlistID = url.validate($scope.url).playlist;
+                    var apiUrl = 'https://api.spotify.com/v1/users/' + userID + '/playlists/' + playlistID;
 
-                        //decompose api response
-                        var completeResponse = data;
-                        var trackResponse = completeResponse.tracks;
+                    //extract token from url
+                    var authString = 'Bearer ' + $rootScope.location.match(/([A-Za-z0-9_-]{155,})/ig)[0];
 
-                        //extract playlist name & track count
-                        $scope.playlistName = completeResponse.name;
-                        $scope.playlistTrackcount = trackResponse.total;
+                    //get request for playlist data
+                    playlistService.getPlaylist(apiUrl, authString)
+                        .then(function (data) {
 
-                        $scope.tracksNew = [];
+                            //decompose api response
+                            var completeResponse = data;
+                            var trackResponse = completeResponse.tracks;
 
-                        var apiUrlTracks = apiUrl + '/tracks';
+                            //extract playlist name & track count
+                            $scope.playlistName = completeResponse.name;
+                            $scope.playlistTrackcount = trackResponse.total;
 
-                        var apiUrlTracksNew = apiUrlTracks;
-                        var x = 0;
-                        var dataHelper = 0;
-                        var deferred = $q.defer();
-                        var reqPromises = [];
-                        var y = 0;
+                            $scope.tracksNew = [];
 
-                        for (x; x < trackResponse.total;) {
+                            var apiUrlTracks = apiUrl + '/tracks';
 
-                            trackService.getTracks(apiUrlTracksNew, authString)
-                                .then(function (data) {
-                                    dataHelper += data;
-                                    reqPromises.push(dataHelper);
-                                    y += 1;
+                            var apiUrlTracksNew = apiUrlTracks;
+                            var x = 0;
+                            var dataHelper = 0;
+                            var deferred = $q.defer();
+                            var reqPromises = [];
+                            var y = 0;
 
+                            for (x; x < trackResponse.total;) {
 
-                                }, function (error) {
-                                    $scope.errorMessage = error.error.status;
-                                })
-                                .then(function () {
-                                    var b = reqPromises.length;
-
-                                    $scope.playlistDuration = reqPromises[b - 1];
-
-                                    var durationSec = reqPromises[b - 1] / 1000;
-                                    $scope.sizeNormalQuality = size.calculate(durationSec, 'normal');
-                                    $scope.sizeHighQuality = size.calculate(durationSec, 'high');
-                                    $scope.sizeExtremeQuality = size.calculate(durationSec, 'extreme');
-
-                                    $scope.sizeNormalQualityReal = size.calculate(durationSec, 'normal_real');
-                                    $scope.sizeHighQualityReal = size.calculate(durationSec, 'high_real');
-                                    $scope.sizeExtremeQualityReal = size.calculate(durationSec, 'extreme_real');
-                                })
-                                .then(function () {
-                                    if (reqPromises.length = y) {
-                                        $q.all(reqPromises).then(function () {
+                                trackService.getTracks(apiUrlTracksNew, authString)
+                                    .then(function (data) {
+                                        dataHelper += data;
+                                        reqPromises.push(dataHelper);
+                                        y += 1;
 
 
-                                            deferred.resolve();
-                                            //display playlist data
-                                            $scope.showPlaylist = true;
+                                    }, function (error) {
+                                        $scope.errorMessage = error.error.status;
+                                    })
+                                    .then(function () {
+                                        var b = reqPromises.length;
 
-                                        });
-                                    }
-                                });
+                                        $scope.playlistDuration = reqPromises[b - 1];
 
-                            x += 100;
-                            apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
-                        }
+                                        var durationSec = reqPromises[b - 1] / 1000;
+                                        $scope.sizeNormalQuality = size.calculate(durationSec, 'normal');
+                                        $scope.sizeHighQuality = size.calculate(durationSec, 'high');
+                                        $scope.sizeExtremeQuality = size.calculate(durationSec, 'extreme');
+
+                                        $scope.sizeNormalQualityReal = size.calculate(durationSec, 'normal_real');
+                                        $scope.sizeHighQualityReal = size.calculate(durationSec, 'high_real');
+                                        $scope.sizeExtremeQualityReal = size.calculate(durationSec, 'extreme_real');
+                                    })
+                                    .then(function () {
+                                        if (reqPromises.length = y) {
+                                            $q.all(reqPromises).then(function () {
 
 
-                        return deferred.promise;
+                                                deferred.resolve();
+                                                //display playlist data
+                                                $scope.showPlaylist = true;
+
+                                            });
+                                        }
+                                    });
+
+                                x += 100;
+                                apiUrlTracksNew = apiUrlTracks + '?offset=' + x;
+                            }
 
 
-                    }, function (error) {
-                        $scope.errorMessage = error.error.status;
-                        $scope.showPlaylist = false;
-                    });
+                            return deferred.promise;
+
+
+                        }, function (error) {
+                            $scope.errorMessage = error.error.status;
+                            $scope.showPlaylist = false;
+                        });
+                }
             }
         }
     })

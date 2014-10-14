@@ -14,6 +14,6 @@ Based on real life tests, more realistic estimations can be achieved assuming 92
 
 ---
 
-This project is licensed under [cc by 4.0](http://creativecommons.org/licenses/by/4.0/)
+This project is licensed under [MIT](https://github.com/slothtier/quantify/blob/master/LICENCE.md).
 
 QUANTIFY is built on top of the [Web API](https://developer.spotify.com/web-api/) but is not affiliated in any way with Spotify. The API as well as all Spotify related content © [Spotify AB](https://www.spotify.com/).
