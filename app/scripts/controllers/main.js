@@ -10,6 +10,7 @@ angular.module('quantifyApp.main', [])
                 $scope.url = '';
                 $scope.showPlaylist = false;
                 $scope.errorMessage = '';
+                $scope.tmpUrl = $scope.url;
             } else {
                 //only request playlist data if url has changed
                 if ($scope.url != $scope.tmpUrl) {
