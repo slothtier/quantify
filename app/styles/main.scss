@@ -50,8 +50,10 @@ input:focus::-webkit-input-placeholder {
 }
 
 a {
-  color: #82b440;
+  color: white;
   text-decoration: underline;
+  cursor: pointer;
+  cursor: hand;
 }
 
 strong, b {
@@ -84,7 +86,7 @@ h1 a, h2 a, h3 a, h5 a, h6 a {
   text-decoration: none;
 }
 
-h4 a {
+h4 a, h3 a {
   color: inherit;
   text-decoration: underline;
 }
@@ -98,12 +100,12 @@ h2 {
 h3 {
   font-weight: 400;
   font-size: 1em;
+  padding: 1.5em 0 0 0;
 }
 
 h4 {
   font-weight: 300;
   font-size: 0.8em;
-  font-style: italic;
 }
 
 sub {
@@ -177,7 +179,7 @@ textarea {
   outline: 0;
   padding: 0.75em;
   text-decoration: none;
-  width: 600px;
+  width: 650px;
   background-color : #222222;
   border-radius: 20px;
   display: inline;

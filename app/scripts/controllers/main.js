@@ -69,13 +69,16 @@ angular.module('quantifyApp.main', [])
                                         $scope.playlistDuration = reqPromises[b - 1];
 
                                         var durationSec = reqPromises[b - 1] / 1000;
-                                        $scope.sizeNormalQuality = size.calculate(durationSec, 'normal');
-                                        $scope.sizeHighQuality = size.calculate(durationSec, 'high');
-                                        $scope.sizeExtremeQuality = size.calculate(durationSec, 'extreme');
+                                        $scope.sizeNormalQualityIdeal = size.calculate(durationSec, 'normal');
+                                        $scope.sizeHighQualityIdeal = size.calculate(durationSec, 'high');
+                                        $scope.sizeExtremeQualityIdeal = size.calculate(durationSec, 'extreme');
 
                                         $scope.sizeNormalQualityReal = size.calculate(durationSec, 'normal_real');
                                         $scope.sizeHighQualityReal = size.calculate(durationSec, 'high_real');
                                         $scope.sizeExtremeQualityReal = size.calculate(durationSec, 'extreme_real');
+
+                                        $scope.toggle = true;
+                                        $scope.toggleBitrate();
                                     })
                                     .then(function () {
                                         if (reqPromises.length = y) {
@@ -103,6 +106,34 @@ angular.module('quantifyApp.main', [])
                             $scope.showPlaylist = false;
                         });
                 }
+            }
+        }
+
+
+        $scope.toggleBitrate = function () {
+
+            if ($scope.toggle === false) {
+                $scope.sizeNormalQuality = $scope.sizeNormalQualityReal;
+                $scope.sizeHighQuality = $scope.sizeHighQualityReal;
+                $scope.sizeExtremeQuality = $scope.sizeExtremeQualityReal;
+
+                $scope.bitrateType = "realistic";
+                $scope.bitrateNormal = "92";
+                $scope.bitrateHigh = "153";
+                $scope.bitrateExtreme = "281";
+
+                $scope.toggle = true;
+            } else {
+                $scope.sizeNormalQuality = $scope.sizeNormalQualityIdeal;
+                $scope.sizeHighQuality = $scope.sizeHighQualityIdeal;
+                $scope.sizeExtremeQuality = $scope.sizeExtremeQualityIdeal;
+
+                $scope.bitrateType = "idealized";
+                $scope.bitrateNormal = "96";
+                $scope.bitrateHigh = "160";
+                $scope.bitrateExtreme = "320";
+
+                $scope.toggle = false;
             }
         }
     })
