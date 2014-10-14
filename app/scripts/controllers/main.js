@@ -20,7 +20,7 @@ angular.module('quantifyApp.main', [])
                 var apiUrl = 'https://api.spotify.com/v1/users/' + userID + '/playlists/' + playlistID;
 
                 //extract token from url
-                var authString = 'Bearer ' + $rootScope.location.match(/([A-Za-z0-9_-]{155})/ig)[0];
+                var authString = 'Bearer ' + $rootScope.location.match(/([A-Za-z0-9_-]{155,})/ig)[0];
 
                 //get request for playlist data
                 playlistService.getPlaylist(apiUrl, authString)
