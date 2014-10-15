@@ -21,9 +21,9 @@ angular
     'quantifyApp.formatfilesize'
   ])
     .run(function ($rootScope, $location) {
-        //if authentication token is in query string, grab & delete it from url
+        //if access token is in query string, grab & delete it from url
         if ($location.$$hash.search(/([A-Za-z0-9_-]{155,})/ig) > -1) {
-            $rootScope.location = $location.$$hash;
+            $rootScope.accessToken = $location.$$hash.match(/([A-Za-z0-9_-]{155,})/ig)[0];
             $location.path('/main');
             $location.url($location.path())
         }
