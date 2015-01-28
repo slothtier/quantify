@@ -6,8 +6,12 @@ angular.module('quantifyApp.validation', [])
 
         var validateUrl = function (url) {
             //check if spotify url
-            if (url.search('http://open.spotify.com/user/') > -1 && url.search(/[\w]{22}/ig) > -1 && url.search('/playlist/') > -1) {
+            if (url.search('open.spotify.com/user/') > -1 && url.search(/[\w]{22}/ig) > -1 && url.search('/playlist/') > -1) {
+              if (url.search('http://open.spotify.com/user/') > -1) {
                 url = url.replace('http://open.spotify.com/user/', '');
+              } else {
+                url = url.replace('https://open.spotify.com/user/', '');
+              }
                 var urlHelper = url.split('/');
                 return {user: urlHelper[0], playlist: urlHelper[2]};
 
